@@ -1,3 +1,1 @@
-# monorepo
-
-Web Monorepo
+# Web monorepo template

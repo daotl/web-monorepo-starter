@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "misterj.vue-volar-extention-pack",
+    "antfu.iconify",
+    "antfu.goto-alias",
+    "antfu.unocss",
+    "antfu.vite",
+    "bierner.markdown-mermaid",
+    "cweijan.vscode-database-client2",
+    "christian-kohler.npm-intellisense",
+    "csstools.postcss",
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "humao.rest-client",
+    "ibm.output-colorizer",
+    "oderwat.indent-rainbow",
+    "prisma.prisma",
+    "shardulm94.trailing-spaces",
+    "shd101wyy.markdown-preview-enhanced",
+    "streetsidesoftware.code-spell-checker",
+    "yzhang.markdown-all-in-one"
+  ]
+}
