@@ -1,5 +1,8 @@
-nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-alpine"
+nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-pnpm-turborepo-alpine"
+alpineVersion = "v3.16"
 # owners = ["zhuxiaomin"]
+
+cmdReplaceAlpineRepo = "echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/%s/main/' > /etc/apk/repositories" % alpineVersion
 
 def main(ctx):
     conf = [pipeline(ctx)]
@@ -71,13 +74,13 @@ def steps(ctx):
         "volumes": [cacheVolume],
         "commands": [
             # Some `postinstall` scripts need `git` (already included in the image)
-            # pnpm needs `ssh`
-            "apk add openssh-client",
+            # `pnpm` needs `ssh`, `turborepo` needs `libc6-compat`
+            cmdReplaceAlpineRepo,
+            "apk add openssh-client libc6-compat",
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
             # Set credentials for `npm.internetapi.cn`
             "echo $NPMRC > ~/.npmrc",
             r"sed -i 's/\\\\n/\\n/g' ~/.npmrc",
-            "npm i -g pnpm",
             # Read and store downloaded packages from cache volume
             "pnpm config set store-dir /env/cache/.pnpm-store",
             # Install deps
@@ -90,8 +93,8 @@ def steps(ctx):
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
         "commands": [
-            "apk add perl",
-            "npm run build",
+            cmdReplaceAlpineRepo,
+            "pnpm build",
         ],
     }, {
         "name": "lint",
@@ -99,7 +102,7 @@ def steps(ctx):
         "environment": {
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
-        "commands": ["npm run lint"],
+        "commands": ["pnpm lint"],
     # }, {
     #     "name": "docker",
     #     "image": "plugins/docker",
@@ -135,7 +138,7 @@ def steps(ctx):
     #     },
     #     "settings": {
     #         "pulumi_command": "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
-    #         "pulumi_dependencies": "npm run pulumi-init",
+    #         "pulumi_dependencies": "pnpm pulumi-init",
     #         "pulumi_access_token": {"from_secret": "pulumiAccessToken"},
     #     },
     }, {
