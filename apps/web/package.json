@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo build",
+    "dev": "echo dev",
+    "lint": "echo lint",
+    "start": "echo start"
+  }
+}
