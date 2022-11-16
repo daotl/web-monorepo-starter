@@ -73,10 +73,6 @@ def steps(ctx):
         "image": nodeImage,
         "volumes": [cacheVolume],
         "commands": [
-            # Some `postinstall` scripts need `git` (already included in the image)
-            # `pnpm` needs `ssh`, `turborepo` needs `libc6-compat`
-            cmdReplaceAlpineRepo,
-            "apk add openssh-client libc6-compat",
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
             # Set credentials for `npm.internetapi.cn`
             "echo $NPMRC > ~/.npmrc",
@@ -92,10 +88,7 @@ def steps(ctx):
         "environment": {
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
-        "commands": [
-            cmdReplaceAlpineRepo,
-            "pnpm build",
-        ],
+        "commands": ["pnpm build"],
     }, {
         "name": "lint",
         "image": nodeImage,
