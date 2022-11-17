@@ -43,7 +43,7 @@ def pipeline(ctx):
     }
 
 def steps(ctx):
-    # dockerRepo = "harbor.internetapi.cn/fgweb/monorepo"
+    # dockerRepo = "harbor.internetapi.cn/fgweb/monorepo-starter"
     # dockerTag = "commit-" + ctx.build.commit[0:8]
     cacheVolume = {
         "name": "build-env-data",
@@ -127,7 +127,7 @@ def steps(ctx):
     #     "volumes": [cacheVolume],
     #     "environment": {
     #         "PULUMI_HOME": "/env/cache/.pulumi",
-    #         "NUXT_STARTER_IMAGE_TAG": dockerTag,
+    #         "MONOREPO_STARTER_IMAGE_TAG": dockerTag,
     #     },
     #     "settings": {
     #         "pulumi_command": "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",

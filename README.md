@@ -1,1 +1,1 @@
-# Web monorepo template
+# Web monorepo starter template
