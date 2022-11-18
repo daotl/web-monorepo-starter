@@ -72,6 +72,9 @@ def steps(ctx):
         "name": "install",
         "image": nodeImage,
         "volumes": [cacheVolume],
+        # "environment": {
+        #     "CYPRESS_INSTALL_BINARY": "0",
+        # },
         "commands": [
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
             # Set credentials for `npm.internetapi.cn`
@@ -100,7 +103,7 @@ def steps(ctx):
     #     "name": "docker",
     #     "image": "plugins/docker",
     #     "when": {
-    #         "branch": "master",
+    #         "branch": "main",
     #     },
     #     "settings": {
     #         "repo": dockerRepo,
@@ -120,20 +123,21 @@ def steps(ctx):
     #     },
     # }, {
     #     "name": "deploy-demo",
-    #     "image": "naorlivne/drone-pulumi",
+    #     "image": nodeImage,
     #     "when": {
-    #         "branch": "master",
+    #         "branch": "main",
     #     },
     #     "volumes": [cacheVolume],
     #     "environment": {
+    #         "MONOREPO_STARTER_IMAGE_TAG": dashboardDockerTag,
     #         "PULUMI_HOME": "/env/cache/.pulumi",
-    #         "NUXT_STARTER_IMAGE_TAG": dockerTag,
+    #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
     #     },
-    #     "settings": {
-    #         "pulumi_command": "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
-    #         "pulumi_dependencies": "pnpm pulumi-init",
-    #         "pulumi_access_token": {"from_secret": "pulumiAccessToken"},
-    #     },
+    #     "commands": [
+    #         "pnpm pulumi:init",
+    #         "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
+    #     ],
+    # }, {
     }, {
         "name": "notify",
         "image": "plugins/slack",
