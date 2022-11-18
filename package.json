@@ -16,7 +16,7 @@
     "lint": "npx eslint . && turbo run lint",
     "lint:fix": "npx eslint --fix . && turbo run lint:fix",
     "dev": "turbo run dev --parallel",
-    "pulumi:init": "cd k8s && pnpm i",
+    "pulumi:init": "cd k8s && pnpm i --filter k8s",
     "postinstall": "patch-package",
     "prepare": "husky install"
   },

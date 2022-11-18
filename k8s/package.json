@@ -1,0 +1,24 @@
+{
+  "name": "@fgweb/k8s",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "prettier": "@daotl/prettier-config",
+  "dependencies": {
+    "@pulumi/kubernetes": "^3.22.1",
+    "@pulumi/kubernetesx": "^0.1.6",
+    "@pulumi/pulumi": "^3.46.1",
+    "deepmerge": "^4.2.2"
+  },
+  "devDependencies": {
+    "@daotl/eslint-config": "^0.3.32",
+    "@daotl/tsconfig": "^0.1.2",
+    "@types/node": "^18.11.9",
+    "eslint": "^8.27.0",
+    "prettier": "^2.7.1",
+    "type-fest": "^3.2.0",
+    "typescript": "^4.8.4"
+  }
+}

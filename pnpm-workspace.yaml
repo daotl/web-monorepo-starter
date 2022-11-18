@@ -1,5 +1,6 @@
 packages:
   - 'packages/*'
   - 'apps/*'
+  - k8s
   # exclude
   - '!**/test/**'

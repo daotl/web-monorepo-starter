@@ -129,7 +129,7 @@ def steps(ctx):
     #     },
     #     "volumes": [cacheVolume],
     #     "environment": {
-    #         "MONOREPO_STARTER_IMAGE_TAG": dashboardDockerTag,
+    #         "MONOREPO_STARTER_IMAGE_TAG": webDockerTag,
     #         "PULUMI_HOME": "/env/cache/.pulumi",
     #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
     #     },
