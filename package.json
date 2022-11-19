@@ -18,7 +18,7 @@
     "dev": "turbo run dev --parallel",
     "pulumi:init": "cd k8s && pnpm i --filter k8s",
     "cz": "npx cz",
-    "postinstall": "patch-package",
+    "postinstall": "manypkg check && patch-package",
     "prepare": "husky install"
   },
   "config": {
@@ -27,12 +27,13 @@
     }
   },
   "prettier": "@daotl/prettier-config",
-  "devDependencies": {
+  "dependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@daotl/eslint-config": "^0.3.32",
     "@daotl/prettier-config": "^0.1.3",
     "@daotl/tsconfig": "^0.1.2",
+    "@manypkg/cli": "^0.19.2",
     "@milahu/patch-package": "^6.4.14",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.27.0",
