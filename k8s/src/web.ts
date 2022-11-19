@@ -51,7 +51,7 @@ function newDeployment(
       template: {
         metadata: { labels },
         spec: {
-          imagePullSecrets: [{ name: 'docker-registry' }],
+          // imagePullSecrets: [{ name: 'docker-registry' }],
           containers: [
             {
               name: appName,

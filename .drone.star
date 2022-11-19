@@ -49,6 +49,7 @@ def steps(ctx):
         "name": "build-env-data",
         "path": "/env",
     }
+
     # Retry `pnpm i` at most 3 times for possible network timeout
     cmdPnpmInstallRetry3 = "for i in $(seq 1 3); do [ $i -gt 1 ] && sleep 15; pnpm i && s=0 && break || s=$?; done; (exit $s)"
     return [{
@@ -99,45 +100,48 @@ def steps(ctx):
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
         "commands": ["pnpm lint"],
-    # }, {
-    #     "name": "docker",
-    #     "image": "plugins/docker",
-    #     "when": {
-    #         "branch": "main",
-    #     },
-    #     "settings": {
-    #         "repo": dockerRepo,
-    #         "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
-    #             ctx.build.branch,
-    #             dockerTag,
-    #         ],
-    #         "dockerfile": "docker/Dockerfile.prebuilt",
-    #         "build_args": ["BUILD_ENV=dev"],
-    #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
-    #         "registry": "harbor.internetapi.cn",
-    #         "username": {"from_secret": "droneHarborUsername"},
-    #         "password": {"from_secret": "droneHarborPassword"},
-    #         "mirror": {"from_secret": "aliyunDockerHubMirror"},
-    #         # "auto_tag": true,
-    #         # "auto_tag_suffix": "linux-amd64",
-    #     },
-    # }, {
-    #     "name": "deploy-demo",
-    #     "image": nodeImage,
-    #     "when": {
-    #         "branch": "main",
-    #     },
-    #     "volumes": [cacheVolume],
-    #     "environment": {
-    #         "MONOREPO_STARTER_IMAGE_TAG": webDockerTag,
-    #         "PULUMI_HOME": "/env/cache/.pulumi",
-    #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
-    #     },
-    #     "commands": [
-    #         "pnpm pulumi:init",
-    #         "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
-    #     ],
-    # }, {
+        # }, {
+        #     "name": "docker",
+        #     "image": "plugins/docker",
+        #     "when": {
+        #         "branch": "main",
+        #     },
+        #     "settings": {
+        #         "repo": dockerRepo,
+        #         "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
+        #             ctx.build.branch,
+        #             dockerTag,
+        #         ],
+        #         "dockerfile": "docker/Dockerfile.prebuilt",
+        #         "build_args": ["BUILD_ENV=dev"],
+        #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
+        #         "registry": "harbor.internetapi.cn",
+        #         "username": {"from_secret": "droneHarborUsername"},
+        #         "password": {"from_secret": "droneHarborPassword"},
+        #         "mirror": {"from_secret": "aliyunDockerHubMirror"},
+        #         # "auto_tag": true,
+        #         # "auto_tag_suffix": "linux-amd64",
+        #     },
+        # }, {
+        #     "name": "deploy-demo",
+        #     "image": "pulumi/pulumi-nodejs:3.47.0",,
+        #     "when": {
+        #         "branch": "main",
+        #     },
+        #     "volumes": [cacheVolume],
+        #     "environment": {
+        #         "MONOREPO_STARTER_IMAGE_TAG": webDockerTag,
+        #         "PULUMI_HOME": "/env/cache/.pulumi",
+        #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
+        #     },
+        #     "commands": [
+        #         "npm i -g --registry=https://registry.npmmirror.com pnpm",
+        #          # Read and store downloaded packages from cache volume
+        #          "pnpm config set store-dir /env/cache/.pnpm-store",
+        #         "pnpm pulumi:init",
+        #         "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
+        #     ],
+        # }, {
     }, {
         "name": "notify",
         "image": "plugins/slack",
@@ -160,6 +164,7 @@ def notifyZulipTmpl(ctx):
     tmplBuildLink = "<{{build.link}}|{{repo.owner}}/{{repo.name}}#{{build.number}}>"
     tmplPr = "{{#if build.pull}}<%s/pulls/{{build.pull}}|PR#{{build.pull}}>, {{/if}}" % ctx.repo.link
     tmplCommitBranchAuthor = "commit <%s/commit/{{build.commit}}|#{{truncate build.commit 8}}> on branch <%s/src/branch/{{build.branch}}|{{build.branch}}> by %s" % (ctx.repo.link, ctx.repo.link, author)
+
     # tmplMentions = ""
     # for o in owners:
     #     tmplMentions += "@*%s* " % o
@@ -202,34 +207,34 @@ def secrets():
             "path": "global-env",
             "name": "npmrc",
         },
-    # }, {
-    #     "kind": "secret",
-    #     "name": "droneHarborUsername",
-    #     "get": {
-    #         "path": "global-env",
-    #         "name": "droneHarborUsername",
-    #     },
-    # }, {
-    #     "kind": "secret",
-    #     "name": "droneHarborPassword",
-    #     "get": {
-    #         "path": "global-env",
-    #         "name": "droneHarborPassword",
-    #     },
-    # }, {
-    #     "kind": "secret",
-    #     "name": "aliyunDockerHubMirror",
-    #     "get": {
-    #         "path": "global-env",
-    #         "name": "aliyunDockerHubMirror",
-    #     },
-    # }, {
-    #     "kind": "secret",
-    #     "name": "pulumiAccessToken",
-    #     "get": {
-    #         "path": "global-env",
-    #         "name": "pulumiAccessToken",
-    #     },
+        # }, {
+        #     "kind": "secret",
+        #     "name": "droneHarborUsername",
+        #     "get": {
+        #         "path": "global-env",
+        #         "name": "droneHarborUsername",
+        #     },
+        # }, {
+        #     "kind": "secret",
+        #     "name": "droneHarborPassword",
+        #     "get": {
+        #         "path": "global-env",
+        #         "name": "droneHarborPassword",
+        #     },
+        # }, {
+        #     "kind": "secret",
+        #     "name": "aliyunDockerHubMirror",
+        #     "get": {
+        #         "path": "global-env",
+        #         "name": "aliyunDockerHubMirror",
+        #     },
+        # }, {
+        #     "kind": "secret",
+        #     "name": "pulumiAccessToken",
+        #     "get": {
+        #         "path": "global-env",
+        #         "name": "pulumiAccessToken",
+        #     },
     }, {
         "kind": "secret",
         "name": "zulipWebhook",
