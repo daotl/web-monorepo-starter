@@ -17,9 +17,15 @@
     "lint:fix": "npx eslint --fix . && turbo run lint:fix",
     "dev": "turbo run dev --parallel",
     "pulumi:init": "cd k8s && pnpm i --filter k8s",
-    "postinstall": "manypkg check && patch-package"
+    "postinstall": "manypkg check && patch-package",
+    "cz": "npx cz"
   },
   "prettier": "@daotl/prettier-config",
+  "config": {
+    "commitizen": {
+      "path": "commitiquette"
+    }
+  },
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
@@ -28,9 +34,10 @@
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "^0.19.2",
     "@milahu/patch-package": "^6.4.14",
+    "commitiquette": "^1.2.1",
+    "commitizen": "^4.2.5",
     "commitlint-config-pnpm-workspace": "^0.2.2",
     "commitlint-plugin-scope-enhanced": "^0.1.0",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.28.0",
     "lefthook": "^1.2.2",
     "prettier": "^2.8.0",

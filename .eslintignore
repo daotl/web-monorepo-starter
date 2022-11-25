@@ -1,3 +1,5 @@
+!.*.*js
+!.*.*ts
 k8s
 packages
 apps
