@@ -17,8 +17,7 @@
     "lint:fix": "npx eslint --fix . && turbo run lint:fix",
     "dev": "turbo run dev --parallel",
     "pulumi:init": "cd k8s && pnpm i --filter k8s",
-    "postinstall": "manypkg check && patch-package",
-    "prepare": "husky install"
+    "postinstall": "manypkg check && patch-package"
   },
   "prettier": "@daotl/prettier-config",
   "dependencies": {
@@ -31,8 +30,6 @@
     "@milahu/patch-package": "^6.4.14",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.28.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.0.3",
     "prettier": "^2.8.0",
     "rambdax": "^9.0.0",
     "turbo": "^1.6.3",
@@ -40,5 +37,8 @@
   },
   "volta": {
     "node": "18.9.0"
+  },
+  "devDependencies": {
+    "lefthook": "^1.2.2"
   }
 }

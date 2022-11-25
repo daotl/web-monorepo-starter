@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: '*'
+      run: npx eslint --cache --fix {staged_files} && git add {staged_files}
