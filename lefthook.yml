@@ -4,3 +4,8 @@ pre-commit:
     eslint:
       glob: '*'
       run: npx eslint --cache --fix {staged_files} && git add {staged_files}
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no -- commitlint --edit $1
