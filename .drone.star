@@ -20,19 +20,19 @@ def pipeline(ctx):
             "event": ["custom", "push", "tag"],
         },
         "metadata": {
-            "annotations": {"drone.internetapi.cn/repo": ctx.repo.slug},
+            "annotations": {"drone.daot.io/repo": ctx.repo.slug},
         },
         "clone": {"disable": True},
         "steps": steps(ctx),
         # Speed up using K8s internal network
-        "host_aliases": [{
-            # ClusterIP of K8s Traefik ingress controller
-            "ip": "192.168.94.168",
-            "hostnames": [
-                "npm.internetapi.cn",
-                "harbor.internetapi.cn",
-            ],
-        }],
+        # "host_aliases": [{
+        #     # ClusterIP of K8s Traefik ingress controller
+        #     "ip": "192.168.0.1",
+        #     "hostnames": [
+        #         "npm.daot.io",
+        #         "harbor.daot.io",
+        #     ],
+        # }],
         "volumes": [{
             "name": "build-env-data",
             "claim": {
@@ -43,7 +43,7 @@ def pipeline(ctx):
     }
 
 def steps(ctx):
-    # dockerRepo = "harbor.internetapi.cn/fgweb/monorepo"
+    # dockerRepo = "harbor.daot.io/web/monorepo-starter"
     # dockerTag = "commit-" + ctx.build.commit[0:8]
     cacheVolume = {
         "name": "build-env-data",
@@ -63,7 +63,7 @@ def steps(ctx):
             "echo $SSH_KEY > ~/.ssh/id_ed25519",
             r"sed -i 's/\\\\n/\\n/g' ~/.ssh/id_ed25519",
             "chmod 600 ~/.ssh/id_ed25519",
-            "echo 'Host gitea.internetapi.cn\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
+            "echo 'Host gitea.daot.io\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
             "ssh-keyscan -H gitea-ssh.gitea >> ~/.ssh/known_hosts",
             "git clone %s ." % ctx.repo.git_ssh_url,
             "git checkout $DRONE_COMMIT",
@@ -78,7 +78,7 @@ def steps(ctx):
         # },
         "commands": [
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
-            # Set credentials for `npm.internetapi.cn`
+            # Set credentials for `npm.daot.io`
             "echo $NPMRC > ~/.npmrc",
             r"sed -i 's/\\\\n/\\n/g' ~/.npmrc",
             # Read and store downloaded packages from cache volume
@@ -110,12 +110,12 @@ def steps(ctx):
         #         "repo": dockerRepo,
         #         "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
         #             ctx.build.branch,
-        #             dockerTag,
+        #             webDockerTag,
         #         ],
         #         "dockerfile": "docker/Dockerfile.prebuilt",
         #         "build_args": ["BUILD_ENV=dev"],
         #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
-        #         "registry": "harbor.internetapi.cn",
+        #         "registry": "harbor.daot.io",
         #         "username": {"from_secret": "droneHarborUsername"},
         #         "password": {"from_secret": "droneHarborPassword"},
         #         "mirror": {"from_secret": "aliyunDockerHubMirror"},
@@ -130,7 +130,7 @@ def steps(ctx):
         #     },
         #     "volumes": [cacheVolume],
         #     "environment": {
-        #         "MONOREPO_STARTER_IMAGE_TAG": webDockerTag,
+        #         "WEB_IMAGE_TAG": webDockerTag,
         #         "PULUMI_HOME": "/env/cache/.pulumi",
         #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
         #     },

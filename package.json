@@ -1,13 +1,13 @@
 {
-  "name": "@fgweb/monorepo",
+  "name": "@daotl/web-monorepo-starter",
   "type": "module",
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@7.16.0",
-  "description": "Web monorepo template",
+  "description": "Web monorepo starter template",
   "repository": {
     "type": "git",
-    "url": "git@gitea.internetapi.cn:fgweb/monorepo.git"
+    "url": "git@github.com:daotl/web-monorepo-starter.git"
   },
   "main": "index.js",
   "scripts": {

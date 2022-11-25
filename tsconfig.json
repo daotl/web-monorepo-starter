@@ -1,15 +1,3 @@
 {
-  "extends": "@daotl/tsconfig/node.json",
-  "references": [
-    {
-      "path": "web/common"
-    },
-    {
-      "path": "web/backend"
-    },
-    {
-      "path": "web/frontend"
-    }
-  ],
-  "exclude": ["lib/fgfe-vue-components/**/*"]
+  "extends": "@daotl/tsconfig/node.json"
 }
