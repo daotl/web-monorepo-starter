@@ -10,11 +10,11 @@ import { mergeArrayByName } from './util'
 
 const appName = 'web'
 const appLabels = { app: appName }
-const imageName = 'harbor.internetapi.cn/fgweb/monorepo-starter'
+const imageName = 'harbor.daot.io/web/monorepo-starter'
 const imageTag =
-  process.env['WEB_IMAGE_TAG'] || config.get('imageTag') || 'master'
+  process.env['WEB_IMAGE_TAG'] || config.get('imageTag') || 'main'
 const webImage = `${imageName}:${imageTag}`
-const webHostname = 'web.monorepo-starter.demo.internetapi.cn'
+const webHostname = 'web.monorepo-starter.demo.daot.io'
 
 // const cmApp = new k8s.core.v1.ConfigMap(appName, {
 //   metadata: { labels: appLabels },

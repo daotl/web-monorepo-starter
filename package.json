@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@7.16.0",
-  "description": "Web monorepo starter",
+  "description": "Web monorepo starter template",
   "repository": {
     "type": "git",
-    "url": "git@gitea.internetapi.cn:fgweb/monorepo.git"
+    "url": "git@github.com:daotl/web-monorepo-starter.git"
   },
   "main": "index.js",
   "scripts": {
@@ -17,32 +17,33 @@
     "lint:fix": "npx eslint --fix . && turbo run lint:fix",
     "dev": "turbo run dev --parallel",
     "pulumi:init": "cd k8s && pnpm i --filter k8s",
-    "cz": "npx cz",
     "postinstall": "manypkg check && patch-package",
-    "prepare": "husky install"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "cz": "npx cz"
   },
   "prettier": "@daotl/prettier-config",
+  "config": {
+    "commitizen": {
+      "path": "commitiquette"
+    }
+  },
   "dependencies": {
-    "@commitlint/cli": "^17.2.0",
-    "@commitlint/config-conventional": "^17.2.0",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@daotl/eslint-config": "^0.3.32",
     "@daotl/prettier-config": "^0.1.3",
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "^0.19.2",
     "@milahu/patch-package": "^6.4.14",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.27.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "rambdax": "^8.1.0",
+    "commitiquette": "^1.2.1",
+    "commitizen": "^4.2.5",
+    "commitlint-config-pnpm-workspace": "^0.2.2",
+    "commitlint-plugin-scope-enhanced": "^0.1.0",
+    "eslint": "^8.28.0",
+    "lefthook": "^1.2.2",
+    "prettier": "^2.8.0",
+    "rambdax": "^9.0.0",
     "turbo": "^1.6.3",
-    "typescript": "daotl/tsplus-typescript.git#a340476ed3ff353be33678cce6420dfcf2752d0d"
+    "typescript": "^4.9.3"
   },
   "volta": {
     "node": "18.9.0"

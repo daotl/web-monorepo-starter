@@ -1,6 +1,6 @@
 nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-pnpm-turborepo-alpine"
 alpineVersion = "v3.16"
-# owners = ["zhuxiaomin"]
+# owners = ["nexzhu"]
 
 cmdReplaceAlpineRepo = "echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/%s/main/' > /etc/apk/repositories" % alpineVersion
 
@@ -17,22 +17,22 @@ def pipeline(ctx):
         "trigger": {
             "branch": {"exclude": ["temp/*"]},
             # `custom` for triggering builds from UI
-            "event": ["custom", "push", "tag"],
+            "event": ["custom", "push", "pull_request", "tag"],
         },
         "metadata": {
-            "annotations": {"drone.internetapi.cn/repo": ctx.repo.slug},
+            "annotations": {"drone.daot.io/repo": ctx.repo.slug},
         },
         "clone": {"disable": True},
         "steps": steps(ctx),
         # Speed up using K8s internal network
-        "host_aliases": [{
-            # ClusterIP of K8s Traefik ingress controller
-            "ip": "192.168.94.168",
-            "hostnames": [
-                "npm.internetapi.cn",
-                "harbor.internetapi.cn",
-            ],
-        }],
+        # "host_aliases": [{
+        #     # ClusterIP of K8s Traefik ingress controller
+        #     "ip": "192.168.0.1",
+        #     "hostnames": [
+        #         "npm.daot.io",
+        #         "harbor.daot.io",
+        #     ],
+        # }],
         "volumes": [{
             "name": "build-env-data",
             "claim": {
@@ -63,7 +63,7 @@ def steps(ctx):
             "echo $SSH_KEY > ~/.ssh/id_ed25519",
             r"sed -i 's/\\\\n/\\n/g' ~/.ssh/id_ed25519",
             "chmod 600 ~/.ssh/id_ed25519",
-            "echo 'Host gitea.internetapi.cn\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
+            "echo 'Host gitea.daot.io\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
             "ssh-keyscan -H gitea-ssh.gitea >> ~/.ssh/known_hosts",
             "git clone %s ." % ctx.repo.git_ssh_url,
             "git checkout $DRONE_COMMIT",
@@ -78,7 +78,7 @@ def steps(ctx):
         # },
         "commands": [
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
-            # Set credentials for `npm.internetapi.cn`
+            # Set credentials for `npm.daot.io`
             "echo $NPMRC > ~/.npmrc",
             r"sed -i 's/\\\\n/\\n/g' ~/.npmrc",
             # Read and store downloaded packages from cache volume
@@ -99,7 +99,11 @@ def steps(ctx):
         "environment": {
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
-        "commands": ["pnpm lint"],
+        # Full lint for `main` branch and PR, only changed files diffed against `main` for other branches
+        "commands": ["pnpm lint"] if ctx.build.branch == "main" or ctx.build.event == "pull_request" else [
+            "git reset --soft main",
+            "npx lefthook run pre-commit",
+        ],
         # }, {
         #     "name": "docker",
         #     "image": "plugins/docker",
@@ -110,12 +114,12 @@ def steps(ctx):
         #         "repo": dockerRepo,
         #         "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
         #             ctx.build.branch,
-        #             dockerTag,
+        #             webDockerTag,
         #         ],
         #         "dockerfile": "docker/Dockerfile.prebuilt",
         #         "build_args": ["BUILD_ENV=dev"],
         #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
-        #         "registry": "harbor.internetapi.cn",
+        #         "registry": "harbor.daot.io",
         #         "username": {"from_secret": "droneHarborUsername"},
         #         "password": {"from_secret": "droneHarborPassword"},
         #         "mirror": {"from_secret": "aliyunDockerHubMirror"},
@@ -130,7 +134,7 @@ def steps(ctx):
         #     },
         #     "volumes": [cacheVolume],
         #     "environment": {
-        #         "MONOREPO_STARTER_IMAGE_TAG": webDockerTag,
+        #         "WEB_IMAGE_TAG": webDockerTag,
         #         "PULUMI_HOME": "/env/cache/.pulumi",
         #         "PULUMI_ACCESS_TOKEN": {"from_secret": "pulumiAccessToken"},
         #     },
