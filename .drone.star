@@ -1,6 +1,6 @@
 nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-pnpm-turborepo-alpine"
 alpineVersion = "v3.16"
-# owners = ["zhuxiaomin"]
+# owners = ["nexzhu"]
 
 cmdReplaceAlpineRepo = "echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/%s/main/' > /etc/apk/repositories" % alpineVersion
 
@@ -17,7 +17,7 @@ def pipeline(ctx):
         "trigger": {
             "branch": {"exclude": ["temp/*"]},
             # `custom` for triggering builds from UI
-            "event": ["custom", "push", "tag"],
+            "event": ["custom", "push", "pull_request", "tag"],
         },
         "metadata": {
             "annotations": {"drone.daot.io/repo": ctx.repo.slug},
@@ -99,7 +99,11 @@ def steps(ctx):
         "environment": {
             "NODE_OPTIONS": "--max-old-space-size=8192",
         },
-        "commands": ["pnpm lint"],
+        # Full lint for `main` branch and PR, only changed files diffed against `main` for other branches
+        "commands": ["pnpm lint"] if ctx.build.branch == "main" or ctx.build.event == "pull_request" else [
+            "git reset --soft main",
+            "npx lefthook run pre-commit",
+        ],
         # }, {
         #     "name": "docker",
         #     "image": "plugins/docker",
