@@ -1,6 +1,6 @@
 nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-pnpm-turborepo-alpine"
 alpineVersion = "v3.16"
-# owners = ["nexzhu"]
+# owners = ["zhuxiaomin"]
 
 cmdReplaceAlpineRepo = "echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/%s/main/' > /etc/apk/repositories" % alpineVersion
 
@@ -20,19 +20,19 @@ def pipeline(ctx):
             "event": ["custom", "push", "pull_request", "tag"],
         },
         "metadata": {
-            "annotations": {"drone.daot.io/repo": ctx.repo.slug},
+            "annotations": {"drone.internetapi.cn/repo": ctx.repo.slug},
         },
         "clone": {"disable": True},
         "steps": steps(ctx),
         # Speed up using K8s internal network
-        # "host_aliases": [{
-        #     # ClusterIP of K8s Traefik ingress controller
-        #     "ip": "192.168.0.1",
-        #     "hostnames": [
-        #         "npm.daot.io",
-        #         "harbor.daot.io",
-        #     ],
-        # }],
+        "host_aliases": [{
+            # ClusterIP of K8s Traefik ingress controller
+            "ip": "192.168.94.168",
+            "hostnames": [
+                "npm.internetapi.cn",
+                "harbor.internetapi.cn",
+            ],
+        }],
         "volumes": [{
             "name": "build-env-data",
             "claim": {
@@ -63,7 +63,7 @@ def steps(ctx):
             "echo $SSH_KEY > ~/.ssh/id_ed25519",
             r"sed -i 's/\\\\n/\\n/g' ~/.ssh/id_ed25519",
             "chmod 600 ~/.ssh/id_ed25519",
-            "echo 'Host gitea.daot.io\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
+            "echo 'Host gitea.internetapi.cn\n  Hostname gitea-ssh.gitea\n' >> ~/.ssh/config",
             "ssh-keyscan -H gitea-ssh.gitea >> ~/.ssh/known_hosts",
             "git clone %s ." % ctx.repo.git_ssh_url,
             "git checkout $DRONE_COMMIT",
@@ -78,7 +78,7 @@ def steps(ctx):
         # },
         "commands": [
             "npm config set tarball /env/cache/nodejs/node-v18.4.0-headers.tar.gz",
-            # Set credentials for `npm.daot.io`
+            # Set credentials for `npm.internetapi.cn`
             "echo $NPMRC > ~/.npmrc",
             r"sed -i 's/\\\\n/\\n/g' ~/.npmrc",
             # Read and store downloaded packages from cache volume
@@ -119,7 +119,7 @@ def steps(ctx):
         #         "dockerfile": "docker/Dockerfile.prebuilt",
         #         "build_args": ["BUILD_ENV=dev"],
         #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
-        #         "registry": "harbor.daot.io",
+        #         "registry": "harbor.internetapi.cn",
         #         "username": {"from_secret": "droneHarborUsername"},
         #         "password": {"from_secret": "droneHarborPassword"},
         #         "mirror": {"from_secret": "aliyunDockerHubMirror"},

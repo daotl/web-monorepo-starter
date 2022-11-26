@@ -1,5 +1,5 @@
 {
-  "name": "@daotl/k8s",
+  "name": "@fgweb/k8s",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint .",

@@ -7,7 +7,7 @@
   "description": "Web monorepo starter template",
   "repository": {
     "type": "git",
-    "url": "git@github.com:daotl/web-monorepo-starter.git"
+    "url": "git@gitea.internetapi.cn:fgweb/monorepo.git"
   },
   "main": "index.js",
   "scripts": {

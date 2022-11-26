@@ -6,10 +6,10 @@ const outputs = ['dist/**', 'build/**', '.cache/**']
 
 const inputsIgnore = map(concat('!'), outputs)
 
-// const vueComponents = '@daotl/vue-components'
-// const webCommon = '@daotl/web-common'
-// const webBackend = '@daotl/web-backend'
-// const webFrontend = '@daotl/web-frontend'
+// const vueComponents = '@fgweb/vue-components'
+// const webCommon = '@fgweb/web-common'
+// const webBackend = '@fgweb/web-backend'
+// const webFrontend = '@fgweb/web-frontend'
 
 const config = {
   $schema: 'https://turborepo.org/schema.json',
