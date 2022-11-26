@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    apps-web-eslint:
+      root: apps/web/
+      run: npx eslint --cache --fix {staged_files} && git add {staged_files}

@@ -1,8 +1,10 @@
+extends:
+  - k8s/lefthook.yml
+  - apps/web/lefthook.yml
+
 pre-commit:
-  parallel: true
   commands:
-    eslint:
-      glob: '*'
+    root-eslint:
       run: npx eslint --cache --fix {staged_files} && git add {staged_files}
 
 commit-msg:
