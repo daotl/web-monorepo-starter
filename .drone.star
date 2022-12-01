@@ -2,7 +2,7 @@ nodeImage = "daotl/node-gyp:9.0.0-node-18-root-git-pnpm-turborepo-alpine"
 alpineVersion = "v3.16"
 # owners = ["zhuxiaomin"]
 
-cmdReplaceAlpineRepo = "echo -e 'http://mirrors.aliyun.com/alpine/%s/main/\nhttp://mirrors.aliyun.com/alpine/%s/community/' > /etc/apk/repositories" % alpineVersion
+cmdReplaceAlpineRepo = "echo -e 'http://mirrors.aliyun.com/alpine/%s/main/\nhttp://mirrors.aliyun.com/alpine/%s/community/' > /etc/apk/repositories" % (alpineVersion, alpineVersion)
 
 def main(ctx):
     conf = [pipeline(ctx)]
