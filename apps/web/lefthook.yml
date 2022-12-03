@@ -1,5 +1,10 @@
 pre-commit:
+  parallel: true
   commands:
     apps-web-eslint:
       root: apps/web/
       run: npx eslint --cache --fix {staged_files} && git add {staged_files}
+    apps-web-stylelint:
+      root: apps/web/
+      glob: 'src/**.{css,scss,vue,tsx}'
+      run: npx stylelint --fix {staged_files} && git add {staged_files}
