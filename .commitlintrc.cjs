@@ -6,7 +6,9 @@ const pkgs = (ctx) => getPackages(ctx).then((pkgs) => pkgs.concat(['root']))
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   plugins: ['scope-enhanced'],
-  ignores: [(message) => message.startsWith('WIP: ')],
+  ignores: [
+    (message) => message.startsWith('Merge ') || message.startsWith('WIP: '),
+  ],
   rules: {
     'type-case': [0],
     'type-enum': [
