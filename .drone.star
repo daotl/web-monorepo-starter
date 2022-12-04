@@ -142,7 +142,7 @@ def steps(ctx):
 
 def docker(ctx, repo, tag, dockerfile, context):
     return {
-        "name": "docker",
+        "name": "docker(%s:%s)" % (repo, tag),
         "image": "plugins/docker",
         "when": {
             "branch": "main",
