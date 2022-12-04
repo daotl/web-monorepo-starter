@@ -2,4 +2,4 @@ config:
   web-monorepo-starter:api:
     restHost: https://rest
     wsHost: https://ws
-  web-monorepo-starter:imageTag: latest
+  web-monorepo-starter:webImageTag: latest

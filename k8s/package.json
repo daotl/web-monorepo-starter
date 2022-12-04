@@ -13,7 +13,7 @@
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
-    "@daotl/eslint-config": "^0.3.32",
+    "@daotl/eslint-config": "^0.3.33",
     "@daotl/tsconfig": "^0.1.2",
     "@types/node": "^18.11.10",
     "eslint": "^8.29.0",

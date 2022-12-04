@@ -29,7 +29,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@daotl/eslint-config": "^0.3.32",
+    "@daotl/eslint-config": "^0.3.33",
     "@daotl/prettier-config": "^0.1.3",
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "^0.19.2",

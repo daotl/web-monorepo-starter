@@ -1,161 +1,199 @@
-import * as k8s from '@pulumi/kubernetes'
-import type * as pulumi from '@pulumi/pulumi'
-import merge from 'deepmerge'
 // import * as kx from '@pulumi/kubernetesx'
-import fs from 'fs'
+import fs from 'node:fs'
+
+import * as $ from '@pulumi/kubernetes'
+import type * as P from '@pulumi/pulumi'
+import merge from 'deepmerge'
 import type { PartialDeep } from 'type-fest'
 
-import { config, namespace } from './common'
 import { mergeArrayByName } from './util'
 
-const appName = 'web'
-const appLabels = { app: appName }
-const imageName = 'harbor.daot.io/web/monorepo-starter'
-const imageTag =
-  process.env['WEB_IMAGE_TAG'] || config.get('imageTag') || 'main'
-const webImage = `${imageName}:${imageTag}`
-const webHostname = 'web.monorepo-starter.demo.daot.io'
+export const init = (namespace: string) =>
+  ({
+    stack({
+      appName,
+      appLabels = {},
+      imageName,
+      imageTag = 'latest',
+      hostname,
+      caddyfilePath,
+    }: {
+      appName: string
+      appLabels?: Record<string, string>
+      imageName: string
+      imageTag?: string
+      hostname: string
+      caddyfilePath: string
+    }): { deploymentName: P.Output<string>; serviceIp: P.Output<string> } {
+      const image = `${imageName}:${imageTag}`
 
-// const cmApp = new k8s.core.v1.ConfigMap(appName, {
-//   metadata: { labels: appLabels },
-//   data: { FEATURE_X: 'true' },
-// })
+      const [_cmCaddyfile, cmCaddyfileName] = this.cmCaddyfile(
+        appName,
+        appLabels,
+        caddyfilePath,
+      )
 
-const cmCaddyfile = new k8s.core.v1.ConfigMap(appName, {
-  metadata: {
-    namespace,
-    labels: appLabels,
-  },
-  data: {
-    Caddyfile: fs.readFileSync('../apps/web/docker/Caddyfile').toString(),
-  },
-})
-const cmCaddyfileName = cmCaddyfile.metadata.apply((m) => m.name)
+      const deploy = this.deployment(appName, appLabels, image, cmCaddyfileName)
 
-// Deployment
-function newDeployment(
-  name: string,
-  labelsOverride?: Record<string, string>,
-  argsOverride?: PartialDeep<k8s.apps.v1.DeploymentArgs>,
-  opts?: pulumi.CustomResourceOptions,
-): k8s.apps.v1.Deployment {
-  const labels = labelsOverride ? merge(appLabels, labelsOverride) : appLabels
-  let args: k8s.apps.v1.DeploymentArgs = {
-    metadata: {
-      namespace,
-      labels,
+      const svc = this.service(appName, deploy)
+
+      const _ingress = this.ingress(appName, svc, hostname)
+
+      const deploymentName = deploy.metadata.name
+      // When "done", this will print the service IP.
+      const serviceIp = svc.spec.clusterIP
+
+      return {
+        deploymentName,
+        serviceIp,
+      }
     },
-    spec: {
-      selector: { matchLabels: labels },
-      replicas: 1,
-      template: {
-        metadata: { labels },
+
+    cmApp(
+      name: string,
+      labels: Record<string, string> = {},
+    ): [$.core.v1.ConfigMap, P.Output<string>] {
+      const cm = new $.core.v1.ConfigMap(name, {
+        metadata: { namespace, labels },
+        data: { FEATURE_X: 'true' },
+      })
+      return [cm, cm.metadata.apply((m) => m.name)]
+    },
+
+    cmCaddyfile(
+      name: string,
+      labels: Record<string, string> = {},
+      caddyfilePath: string,
+    ): [$.core.v1.ConfigMap, P.Output<string>] {
+      const cm = new $.core.v1.ConfigMap(name, {
+        metadata: {
+          namespace,
+          labels,
+        },
+        data: {
+          Caddyfile: fs.readFileSync(caddyfilePath).toString(),
+        },
+      })
+      return [cm, cm.metadata.apply((m) => m.name)]
+    },
+
+    // Deployment
+    deployment(
+      name: string,
+      labels: Record<string, string>,
+      image: string,
+      cmCaddyfileName: P.Output<string>,
+      {
+        argsOverride,
+        opts,
+      }: {
+        argsOverride?: PartialDeep<$.apps.v1.DeploymentArgs>
+        opts?: P.CustomResourceOptions
+      } = {},
+    ): $.apps.v1.Deployment {
+      let args: $.apps.v1.DeploymentArgs = {
+        metadata: {
+          namespace,
+          labels,
+        },
         spec: {
-          // imagePullSecrets: [{ name: 'docker-registry' }],
-          containers: [
-            {
-              name: appName,
-              image: webImage,
-              env: [
-                // { name: 'REST_HOST', value: api?.restHost },
-                // { name: 'WS_HOST', value: api?.wsHost },
-              ],
-              volumeMounts: [
+          selector: { matchLabels: labels },
+          replicas: 1,
+          template: {
+            metadata: { labels },
+            spec: {
+              // imagePullSecrets: [{ name: 'docker-registry' }],
+              containers: [
                 {
-                  mountPath: '/etc/caddy/Caddyfile',
-                  name: 'caddyfile',
-                  subPath: 'Caddyfile',
+                  name,
+                  image,
+                  env: [
+                    // { name: 'REST_HOST', value: api?.restHost },
+                    // { name: 'WS_HOST', value: api?.wsHost },
+                  ],
+                  volumeMounts: [
+                    {
+                      mountPath: '/etc/caddy/Caddyfile',
+                      name: 'caddyfile',
+                      subPath: 'Caddyfile',
+                    },
+                  ],
                 },
+              ],
+              volumes: [
+                { name: 'caddyfile', configMap: { name: cmCaddyfileName } },
               ],
             },
-          ],
-          volumes: [
-            { name: 'caddyfile', configMap: { name: cmCaddyfileName } },
-          ],
-        },
-      },
-    },
-  }
-  if (argsOverride) {
-    /* eslint-disable @typescript-eslint/ban-ts-comment */
-    // @ts-expect-error
-    args = merge(args, argsOverride, { arrayMerge: mergeArrayByName })
-    /* eslint-enable */
-  }
-  return new k8s.apps.v1.Deployment(name, args, opts)
-}
-
-const deploy = newDeployment(appName)
-
-// Service
-function newService(
-  name: string,
-  deploy: k8s.apps.v1.Deployment,
-): k8s.core.v1.Service {
-  const labels = deploy.spec.template.metadata.labels
-  return new k8s.core.v1.Service(name, {
-    metadata: {
-      namespace,
-      labels,
-    },
-    spec: {
-      type: 'ClusterIP',
-      ports: [
-        {
-          port: 80,
-          targetPort: 80,
-          protocol: 'TCP',
-        },
-      ],
-      selector: labels,
-    },
-  })
-}
-
-const svc = newService(appName, deploy)
-
-// Ingress
-function newIngress(
-  name: string,
-  svc: k8s.core.v1.Service,
-  hostname: string,
-): k8s.networking.v1.Ingress {
-  return new k8s.networking.v1.Ingress(name, {
-    metadata: {
-      namespace,
-      labels: svc.metadata.labels,
-      annotations: {
-        'kubernetes.io/tls-acme': 'true',
-      },
-    },
-    spec: {
-      rules: [
-        {
-          host: hostname,
-          http: {
-            paths: [
-              {
-                pathType: 'Prefix',
-                path: '/',
-                backend: {
-                  service: {
-                    name: svc.metadata.name,
-                    port: { number: 80 },
-                  },
-                },
-              },
-            ],
           },
         },
-      ],
-      tls: [{ hosts: [hostname], secretName: `tls-${hostname}` }],
+      }
+      if (argsOverride) {
+        /* eslint-disable @typescript-eslint/ban-ts-comment */
+        // @ts-expect-error
+        args = merge(args, argsOverride, { arrayMerge: mergeArrayByName })
+        /* eslint-enable */
+      }
+      return new $.apps.v1.Deployment(name, args, opts)
     },
-  })
-}
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _ingress = newIngress(appName, svc, webHostname)
+    // Service
+    service(name: string, deploy: $.apps.v1.Deployment): $.core.v1.Service {
+      const labels = deploy.spec.template.metadata.labels
+      return new $.core.v1.Service(name, {
+        metadata: {
+          namespace,
+          labels,
+        },
+        spec: {
+          type: 'ClusterIP',
+          ports: [
+            {
+              port: 80,
+              targetPort: 80,
+              protocol: 'TCP',
+            },
+          ],
+          selector: labels,
+        },
+      })
+    },
 
-export const webName = deploy.metadata.name
-// When "done", this will print the service IP.
-export const webServiceIp = svc.spec.clusterIP
+    // Ingress
+    ingress(
+      name: string,
+      svc: $.core.v1.Service,
+      hostname: string,
+    ): $.networking.v1.Ingress {
+      return new $.networking.v1.Ingress(name, {
+        metadata: {
+          namespace,
+          labels: svc.metadata.labels,
+          annotations: {
+            'kubernetes.io/tls-acme': 'true',
+          },
+        },
+        spec: {
+          rules: [
+            {
+              host: hostname,
+              http: {
+                paths: [
+                  {
+                    pathType: 'Prefix',
+                    path: '/',
+                    backend: {
+                      service: {
+                        name: svc.metadata.name,
+                        port: { number: 80 },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+          tls: [{ hosts: [hostname], secretName: `tls-${hostname}` }],
+        },
+      })
+    },
+  } as const)
