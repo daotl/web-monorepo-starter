@@ -1,7 +1,10 @@
 // eslint-disable-next-line import/no-unresolved
 import { getPackages } from 'commitlint-config-pnpm-workspace/scope-enhanced'
 
-const pkgs = (ctx) => getPackages(ctx).then((pkgs) => pkgs.concat(['root']))
+const pkgs = (ctx) =>
+  getPackages(ctx).then((pkgs) =>
+    pkgs.concat(['root', 'docker-compose', 'k8s']),
+  )
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],
