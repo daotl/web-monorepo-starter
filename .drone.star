@@ -104,7 +104,7 @@ def steps(ctx):
             "git reset --soft main",
             "npx lefthook run pre-commit",
         ],
-        #}, docker(ctx, webDockerRepo, dockerTag), {
+        #}, docker(ctx, webDockerRepo, dockerTag, "apps/web/docker/Dockerfile.prebuilt", "apps/web"), {
         #     "name": "deploy-demo",
         #     "image": "pulumi/pulumi-nodejs:3.47.0",
         #     "when": {
@@ -140,7 +140,7 @@ def steps(ctx):
         },
     }]
 
-def docker(ctx, repo, tag):
+def docker(ctx, repo, tag, dockerfile, context):
     return {
         "name": "docker",
         "image": "plugins/docker",
@@ -153,7 +153,8 @@ def docker(ctx, repo, tag):
                 ctx.build.branch,
                 tag,
             ],
-            "dockerfile": "docker/Dockerfile.prebuilt",
+            "dockerfile": dockerfile,
+            "context": context,
             "build_args": ["BUILD_ENV=dev"],
             "cache_from": ["%s:%s" % (repo, ctx.build.branch)],
             "registry": "harbor.daot.io",
