@@ -43,7 +43,7 @@ def pipeline(ctx):
     }
 
 def steps(ctx):
-    # dockerRepo = "harbor.daot.io/web/monorepo-starter"
+    # webDockerRepo = "harbor.daot.io/web-monorepo-starter/web"
     # dockerTag = "commit-" + ctx.build.commit[0:8]
     cacheVolume = {
         "name": "build-env-data",
@@ -104,31 +104,9 @@ def steps(ctx):
             "git reset --soft main",
             "npx lefthook run pre-commit",
         ],
-        # }, {
-        #     "name": "docker",
-        #     "image": "plugins/docker",
-        #     "when": {
-        #         "branch": "main",
-        #     },
-        #     "settings": {
-        #         "repo": dockerRepo,
-        #         "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
-        #             ctx.build.branch,
-        #             webDockerTag,
-        #         ],
-        #         "dockerfile": "docker/Dockerfile.prebuilt",
-        #         "build_args": ["BUILD_ENV=dev"],
-        #         "cache_from": ["%s:%s" % (dockerRepo, ctx.build.branch)],
-        #         "registry": "harbor.daot.io",
-        #         "username": {"from_secret": "droneHarborUsername"},
-        #         "password": {"from_secret": "droneHarborPassword"},
-        #         "mirror": {"from_secret": "aliyunDockerHubMirror"},
-        #         # "auto_tag": true,
-        #         # "auto_tag_suffix": "linux-amd64",
-        #     },
-        # }, {
+        #}, docker(ctx, webDockerRepo, dockerTag), {
         #     "name": "deploy-demo",
-        #     "image": "pulumi/pulumi-nodejs:3.47.0",,
+        #     "image": "pulumi/pulumi-nodejs:3.47.0",
         #     "when": {
         #         "branch": "main",
         #     },
@@ -140,12 +118,11 @@ def steps(ctx):
         #     },
         #     "commands": [
         #         "npm i -g --registry=https://registry.npmmirror.com pnpm",
-        #          # Read and store downloaded packages from cache volume
-        #          "pnpm config set store-dir /env/cache/.pnpm-store",
+        #         # Read and store downloaded packages from cache volume
+        #         "pnpm config set store-dir /env/cache/.pnpm-store",
         #         "pnpm pulumi:init",
         #         "pulumi up -s dev --cwd k8s --non-interactive --skip-preview --yes",
         #     ],
-        # }, {
     }, {
         "name": "notify",
         "image": "plugins/slack",
@@ -162,6 +139,31 @@ def steps(ctx):
             "template": notifyZulipTmpl(ctx),
         },
     }]
+
+def docker(ctx, repo, tag):
+    return {
+        "name": "docker",
+        "image": "plugins/docker",
+        "when": {
+            "branch": "main",
+        },
+        "settings": {
+            "repo": repo,
+            "tags": "$DRONE_TAG" if ctx.build.event == "tag" else [
+                ctx.build.branch,
+                tag,
+            ],
+            "dockerfile": "docker/Dockerfile.prebuilt",
+            "build_args": ["BUILD_ENV=dev"],
+            "cache_from": ["%s:%s" % (repo, ctx.build.branch)],
+            "registry": "harbor.daot.io",
+            "username": {"from_secret": "droneHarborUsername"},
+            "password": {"from_secret": "droneHarborPassword"},
+            "mirror": {"from_secret": "aliyunDockerHubMirror"},
+            # "auto_tag": true,
+            # "auto_tag_suffix": "linux-amd64",
+        },
+    }
 
 def notifyZulipTmpl(ctx):
     author = ctx.build.author_name if ctx.build.author_name else ctx.build.sender
