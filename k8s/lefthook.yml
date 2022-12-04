@@ -1,4 +1,5 @@
 pre-commit:
+  parallel: true
   commands:
     k8s-eslint:
       root: k8s/
