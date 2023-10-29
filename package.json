@@ -39,7 +39,7 @@
     "commitlint-config-pnpm-workspace": "^0.2.2",
     "commitlint-plugin-scope-enhanced": "^0.1.0",
     "eslint": "^8.29.0",
-    "lefthook": "^1.2.3",
+    "lefthook": "^1.5.2",
     "prettier": "^2.8.0",
     "rambdax": "^9.0.0",
     "turbo": "^1.6.3",

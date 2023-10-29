@@ -3,8 +3,10 @@ pre-commit:
   commands:
     apps-web-eslint:
       root: apps/web/
-      run: npx eslint --cache --fix {staged_files} && git add {staged_files}
+      run: npx eslint --cache --fix {staged_files}
+      stage_fixed: true
     apps-web-stylelint:
       root: apps/web/
       glob: 'src/**.{css,scss,vue,tsx}'
-      run: npx stylelint --fix {staged_files} && git add {staged_files}
+      run: npx stylelint --fix {staged_files}
+      stage_fixed: true
