@@ -1,16 +1,16 @@
 {
   "extends": "@daotl/tsconfig/node",
   "compilerOptions": {
-    "strict": true,
-    "outDir": "bin",
     "target": "es2016",
+    "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "pretty": true,
+    "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
+    "outDir": "bin",
+    "sourceMap": true,
+    "pretty": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/*.ts"]

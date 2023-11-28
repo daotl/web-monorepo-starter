@@ -1,16 +1,16 @@
-// eslint-disable-next-line import/no-unresolved
 import { getPackages } from 'commitlint-config-pnpm-workspace/scope-enhanced'
 
-const pkgs = (ctx) =>
-  getPackages(ctx).then((pkgs) =>
-    pkgs.concat(['root', 'docker-compose', 'k8s']),
+function pkgs(ctx) {
+  return getPackages(ctx).then(pkgs =>
+    pkgs.concat(['all', 'root', 'docker-compose', 'k8s']),
   )
+}
 
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   plugins: ['scope-enhanced'],
   ignores: [
-    (message) => message.startsWith('Merge ') || message.startsWith('WIP: '),
+    message => message.startsWith('Merge ') || message.startsWith('WIP: '),
   ],
   rules: {
     'type-case': [0],
@@ -36,7 +36,7 @@ module.exports = {
       ],
     ],
     'scope-empty': [2, 'never'],
-    'scope-enum': async (ctx) => [0, 'always', await pkgs(ctx)],
-    'scope-enum-enhanced': async (ctx) => [2, 'always', await pkgs(ctx)],
+    'scope-enum': async ctx => [0, 'always', await pkgs(ctx)],
+    'scope-enum-enhanced': async ctx => [2, 'always', await pkgs(ctx)],
   },
 }

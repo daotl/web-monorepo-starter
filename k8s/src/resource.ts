@@ -1,6 +1,6 @@
-// import * as kx from '@pulumi/kubernetesx'
 import fs from 'node:fs'
 
+// import * as kx from '@pulumi/kubernetesx'
 import * as $ from '@pulumi/kubernetes'
 import type * as P from '@pulumi/pulumi'
 import merge from 'deepmerge'
@@ -8,8 +8,8 @@ import type { PartialDeep } from 'type-fest'
 
 import { mergeArrayByName } from './util'
 
-export const init = (namespace: string) =>
-  ({
+export function init(namespace: string) {
+  return {
     stack({
       appName,
       appLabels = {},
@@ -24,7 +24,7 @@ export const init = (namespace: string) =>
       imageTag?: string
       hostname: string
       caddyfilePath: string
-    }): { deploymentName: P.Output<string>; serviceIp: P.Output<string> } {
+    }): { deploymentName: P.Output<string>, serviceIp: P.Output<string> } {
       const image = `${imageName}:${imageTag}`
 
       const [_cmCaddyfile, cmCaddyfileName] = this.cmCaddyfile(
@@ -57,7 +57,7 @@ export const init = (namespace: string) =>
         metadata: { namespace, labels },
         data: { FEATURE_X: 'true' },
       })
-      return [cm, cm.metadata.apply((m) => m.name)]
+      return [cm, cm.metadata.apply(m => m.name)]
     },
 
     cmCaddyfile(
@@ -74,7 +74,7 @@ export const init = (namespace: string) =>
           Caddyfile: fs.readFileSync(caddyfilePath).toString(),
         },
       })
-      return [cm, cm.metadata.apply((m) => m.name)]
+      return [cm, cm.metadata.apply(m => m.name)]
     },
 
     // Deployment
@@ -128,10 +128,9 @@ export const init = (namespace: string) =>
         },
       }
       if (argsOverride) {
-        /* eslint-disable @typescript-eslint/ban-ts-comment */
+        /* eslint-disable ts/ban-ts-comment */
         // @ts-expect-error
         args = merge(args, argsOverride, { arrayMerge: mergeArrayByName })
-        /* eslint-enable */
       }
       return new $.apps.v1.Deployment(name, args, opts)
     },
@@ -196,4 +195,5 @@ export const init = (namespace: string) =>
         },
       })
     },
-  } as const)
+  } as const
+}
