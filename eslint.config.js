@@ -2,7 +2,10 @@ import config from '@daotl/eslint-config'
 
 export default [
   {
-    ignores: ['k8s'],
+    ignores: [
+      'nx.json',
+      'k8s',
+    ],
   },
   ...config(),
 ]
