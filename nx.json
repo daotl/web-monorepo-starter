@@ -49,15 +49,15 @@
     },
     "lint": {
       "input": [
-        "{projectRoot}/dist!",
-        "{projectRoot}/build!"
+        "!{projectRoot}/dist",
+        "!{projectRoot}/build"
       ],
       "cache": true
     },
     "lint:fix": {
       "input": [
-        "{projectRoot}/dist!",
-        "{projectRoot}/build!"
+        "!{projectRoot}/dist",
+        "!{projectRoot}/build"
       ],
       "cache": true
     },

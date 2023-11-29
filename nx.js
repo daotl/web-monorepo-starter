@@ -4,7 +4,7 @@ import * as R from 'remeda'
 
 const outputs = ['{projectRoot}/dist', '{projectRoot}/build']
 
-const inputsIgnore = R.map(outputs, R.concat('!'))
+const inputsIgnore = R.map(R.map(outputs, R.concat), fn => fn('!'))
 
 const config = {
   $schema: './node_modules/nx/schemas/nx-schema.json',
