@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["./node_modules/@daotl/biome-config/dist/biome.json"],
+  "files": {
+    "ignore": ["nx.json", "./k8s/*", "./apps/*"]
+  }
+}
