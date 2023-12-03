@@ -1,0 +1,114 @@
+name: build
+
+step_commonVars: &step_commonVars
+  name: Set common variables
+  id: commonVars
+  run: |
+    commit_id_8=${GITHUB_SHA::8}
+    docker_image=daotl/web-monorepo-starter-${{ github.job }}
+    echo repo_link=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
+    echo commit_id_8=$commit_id_8 >> $GITHUB_OUTPUT
+    echo docker_image=$docker_image >> $GITHUB_OUTPUT
+    echo commit_id_image=$docker_image:commit-$commit_id_8
+
+step_checkout: &step_checkout
+  # Needs to come first, `actions/setup-node` uses `pnpm-lock.yaml`
+  uses: actions/checkout@v3
+  with:
+    token: '${{ secrets.REPOSITORY_TOKEN }}'
+    ssh-strict: false
+
+step_setup_pnpm: &step_setup_pnpm
+  uses: https://github.com/pnpm/action-setup@v2
+  with:
+    version: 8
+
+step_setup_nodejs: &step_setup_nodejs
+  name: Use Node.js ${{ matrix.node-version }}
+  uses: actions/setup-node@v3
+  with:
+    node-version: ${{ matrix.node-version }}
+    cache: pnpm
+
+step_install_concurrently: &step_install_concurrently
+  run: pnpm add -g concurrently
+
+step_install_deps: &step_install_deps
+  run: CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile --filter ${{ github.job }}
+
+step_build_lint_main: &step_build_lint_main
+  name: build-lint:main
+  if: github.ref == 'refs/heads/main'
+  run: |
+    concurrently "pnpm prod --filter ${{ github.job }}" "pnpm lint --filter ${{ github.job }}"
+
+step_build_lint_not_main: &step_build_lint_not_main
+  name: build-lint:!main
+  if: github.ref != 'refs/heads/main'
+  # `git fetch`: to workaround https://github.com/actions/checkout/issues/296#issuecomment-1348164731
+  run: |
+    git fetch origin main:refs/remotes/origin/main
+    git reset --soft refs/remotes/origin/main
+    concurrently "pnpm prod  --filter ${{ github.job }}" "npx lefthook run pre-commit"
+
+step_docker_setup_buildx: &step_docker_setup_buildx
+  uses: docker/setup-buildx-action@v3
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+
+step_docker_login: &step_docker_login
+  uses: docker/login-action@v3
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+  with:
+    username: ${{ secrets.DOCKERHUB_USERNAME }}
+    password: ${{ secrets.DOCKERHUB_TOKEN  }}
+
+step_docker_build_push: &step_docker_build_push
+  uses: docker/build-push-action@v5
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+  with:
+    context: apps/${{ github.job }}
+    file: apps/${{github.job}}/docker/Dockerfile.ci
+    push: true
+    tags: ${{ steps.commonVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.commonVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.commonVars.outputs.docker_image }}:latest
+    # cache-from: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
+    # cache-to: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
+
+on:
+  push:
+    branches: [main, single-page, feat/*, fix/*, chore/*, debug/*]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+
+    # Workaround for tools (e.g., Node.js) not cached:
+    # https://gitea.com/gitea/act_runner/issues/70#issuecomment-734824
+    env:
+      RUNNER_TOOL_CACHE: /toolcache
+
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Set project variables
+        id: projectVars
+        run: |
+          echo project=web >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
+      - *step_commonVars
+      - *step_checkout
+      - *step_setup_pnpm
+      - *step_setup_nodejs
+      - *step_install_concurrently
+      - *step_install_deps
+      - *step_build_lint_main
+      - *step_build_lint_not_main
+      - *step_docker_setup_buildx
+      - *step_docker_login
+      - *step_docker_build_push
