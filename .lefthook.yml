@@ -5,8 +5,8 @@ extends:
 pre-commit:
   parallel: true
   commands:
-    root-eslint:
-      run: npx eslint --cache --fix {staged_files}
+    root-lint:
+      run: npx biome check --apply {staged_files}
       stage_fixed: true
 
 commit-msg:

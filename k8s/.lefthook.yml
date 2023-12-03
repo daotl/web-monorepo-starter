@@ -1,7 +1,7 @@
 pre-commit:
   parallel: true
   commands:
-    k8s-eslint:
+    k8s-lint:
       root: k8s/
-      run: npx eslint --cache --fix {staged_files}
+      run: npx biome check --apply {staged_files}
       stage_fixed: true
