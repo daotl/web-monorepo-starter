@@ -1,6 +1,6 @@
 extends:
-  - k8s/lefthook.yml
-  - apps/web/lefthook.yml
+  - k8s/.lefthook.yml
+  - apps/web/.lefthook.yml
 
 pre-commit:
   parallel: true

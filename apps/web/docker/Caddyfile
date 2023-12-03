@@ -1,0 +1,14 @@
+:80
+
+# Proxy `/api` to backends
+handle_path /api/* {
+	reverse_proxy {$API_HOST}
+}
+
+# Frontend
+handle {
+	root * /frontend
+	encode gzip
+	try_files {path} /index.html
+	file_server
+}

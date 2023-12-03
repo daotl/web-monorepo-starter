@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    lib-myutil-lint:
+      root: lib/myutil/
+      run: npx biome check --apply {staged_files}
+      stage_fixed: true

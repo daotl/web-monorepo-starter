@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: true
+  commands:
+    apps-desktop-eslint:
+      root: apps/desktop/
+      run: npx eslint --cache --fix {staged_files}
+      stage_fixed: true
+    apps-desktop-stylelint:
+      root: apps/desktop/
+      glob: 'src/**.{css,scss,vue,tsx}'
+      run: npx stylelint --fix {staged_files}
+      stage_fixed: true
