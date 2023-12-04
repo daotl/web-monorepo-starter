@@ -19,7 +19,7 @@ step_checkout: &step_checkout
     ssh-strict: false
 
 step_setup_pnpm: &step_setup_pnpm
-  uses: https://github.com/pnpm/action-setup@v2
+  uses: pnpm/action-setup@v2
   with:
     version: 8
 
@@ -40,7 +40,7 @@ step_build_lint_main: &step_build_lint_main
   name: build-lint:main
   if: github.ref == 'refs/heads/main'
   run: |
-    concurrently "pnpm prod --filter ${{ github.job }}" "pnpm lint --filter ${{ github.job }}"
+    concurrently "pnpm nx build -p ${{ github.job }}" "pnpm nx lint -p ${{ github.job }}"
 
 step_build_lint_not_main: &step_build_lint_not_main
   name: build-lint:!main
@@ -49,7 +49,8 @@ step_build_lint_not_main: &step_build_lint_not_main
   run: |
     git fetch origin main:refs/remotes/origin/main
     git reset --soft refs/remotes/origin/main
-    concurrently "pnpm prod  --filter ${{ github.job }}" "npx lefthook run pre-commit"
+    # FIXME: only run lefthook on project files
+    concurrently "pnpm nx build -p ${{ github.job }}" "npx lefthook run pre-commit"
 
 step_docker_setup_buildx: &step_docker_setup_buildx
   uses: docker/setup-buildx-action@v3

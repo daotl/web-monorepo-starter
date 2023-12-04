@@ -18,8 +18,8 @@ importers:
         specifier: ^18.4.3
         version: 18.4.3
       '@daotl/biome-config':
-        specifier: 0.0.3
-        version: 0.0.3(@biomejs/biome@1.4.0)
+        specifier: 0.0.4
+        version: 0.0.4(@biomejs/biome@1.4.0)
       '@daotl/tsconfig':
         specifier: ^0.1.2
         version: 0.1.2
@@ -150,7 +150,7 @@ packages:
     dev: false
 
   /@biomejs/cli-darwin-arm64@1.4.0:
-    resolution: {integrity: sha512-nBrtVRwr4IlTtxLOHwBwLv1sWvggf9/DnT5/ALIANJZOpoING6u8jHWipods69wK8kGa8Ld7iwHm3W5BrJJFFQ==}
+    resolution: {integrity: sha512-nBrtVRwr4IlTtxLOHwBwLv1sWvggf9/DnT5/ALIANJZOpoING6u8jHWipods69wK8kGa8Ld7iwHm3W5BrJJFFQ==, tarball: https://registry.npmjs.org/@biomejs/cli-darwin-arm64/-/cli-darwin-arm64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [arm64]
     os: [darwin]
@@ -159,7 +159,7 @@ packages:
     optional: true
 
   /@biomejs/cli-darwin-x64@1.4.0:
-    resolution: {integrity: sha512-nny0VgOj3ksUGzU5GblgtQEvrAZFgFe1IJBoYOP978OQdDrg7BpS+GX5udfof87Dl4ZlHPRBU951ceHOxF7BTg==}
+    resolution: {integrity: sha512-nny0VgOj3ksUGzU5GblgtQEvrAZFgFe1IJBoYOP978OQdDrg7BpS+GX5udfof87Dl4ZlHPRBU951ceHOxF7BTg==, tarball: https://registry.npmjs.org/@biomejs/cli-darwin-x64/-/cli-darwin-x64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [x64]
     os: [darwin]
@@ -168,7 +168,7 @@ packages:
     optional: true
 
   /@biomejs/cli-linux-arm64@1.4.0:
-    resolution: {integrity: sha512-gyLkT/Yh9xfW1T9yjQs/2txkCeG0e+LRs0adLugMwN0ptcNTRyusBvUoiHnpB+9rS6hWu9ZCedGMNmKQ8v2GSw==}
+    resolution: {integrity: sha512-gyLkT/Yh9xfW1T9yjQs/2txkCeG0e+LRs0adLugMwN0ptcNTRyusBvUoiHnpB+9rS6hWu9ZCedGMNmKQ8v2GSw==, tarball: https://registry.npmjs.org/@biomejs/cli-linux-arm64/-/cli-linux-arm64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [arm64]
     os: [linux]
@@ -177,7 +177,7 @@ packages:
     optional: true
 
   /@biomejs/cli-linux-x64@1.4.0:
-    resolution: {integrity: sha512-LIxTuU2zSbIHM9XDYjQphJ5UU8h2eS7yR8uIvGYSba7Qt9AKqfbenyVJTsVnoj1CXxxgKNVSc/wVmlOlGz5DBQ==}
+    resolution: {integrity: sha512-LIxTuU2zSbIHM9XDYjQphJ5UU8h2eS7yR8uIvGYSba7Qt9AKqfbenyVJTsVnoj1CXxxgKNVSc/wVmlOlGz5DBQ==, tarball: https://registry.npmjs.org/@biomejs/cli-linux-x64/-/cli-linux-x64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [x64]
     os: [linux]
@@ -186,7 +186,7 @@ packages:
     optional: true
 
   /@biomejs/cli-win32-arm64@1.4.0:
-    resolution: {integrity: sha512-U2jT1/0wZLJIRqnU8qHAfi/A/+yUwlL3sYJgqs+wO0BbR22WGQZlj03u5FdpEoyLXdsLv1pbeIcjNp+V0NYXWA==}
+    resolution: {integrity: sha512-U2jT1/0wZLJIRqnU8qHAfi/A/+yUwlL3sYJgqs+wO0BbR22WGQZlj03u5FdpEoyLXdsLv1pbeIcjNp+V0NYXWA==, tarball: https://registry.npmjs.org/@biomejs/cli-win32-arm64/-/cli-win32-arm64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [arm64]
     os: [win32]
@@ -195,7 +195,7 @@ packages:
     optional: true
 
   /@biomejs/cli-win32-x64@1.4.0:
-    resolution: {integrity: sha512-gN6DgyyBxIwoCovAUFJHFWVallb0cLosayDRtNyxU3MDv/atZxSXOWQezfVKBIbgmFPxYWJObd+awvbPYXwwww==}
+    resolution: {integrity: sha512-gN6DgyyBxIwoCovAUFJHFWVallb0cLosayDRtNyxU3MDv/atZxSXOWQezfVKBIbgmFPxYWJObd+awvbPYXwwww==, tarball: https://registry.npmjs.org/@biomejs/cli-win32-x64/-/cli-win32-x64-1.4.0.tgz}
     engines: {node: '>=14.*'}
     cpu: [x64]
     os: [win32]
@@ -367,8 +367,8 @@ packages:
       chalk: 4.1.2
     dev: false
 
-  /@daotl/biome-config@0.0.3(@biomejs/biome@1.4.0):
-    resolution: {integrity: sha512-KBpwDda+acO0C8CqUNT+mT4/1+ElUkmrXBEKcw+xmi8Zv3z0nL81dHUWI+skbH9HvB0F9Zfbln0Csme5tGYEcw==}
+  /@daotl/biome-config@0.0.4(@biomejs/biome@1.4.0):
+    resolution: {integrity: sha512-+eqT0UQVBwLCknHxgxf458yUfv5FCWXfDycqKmJxEjpmvw29cSSQ1vOkly2a4mqhwWeZq7RD9RQzfETEIHIFlA==, tarball: https://registry.npmjs.org/@daotl/biome-config/-/biome-config-0.0.4.tgz}
     peerDependencies:
       '@biomejs/biome': 1.4.0
     dependencies:
@@ -546,7 +546,7 @@ packages:
     dev: false
 
   /@nx/nx-darwin-arm64@17.1.3:
-    resolution: {integrity: sha512-f4qLa0y3C4uuhYKgq+MU892WaQvtvmHqrEhHINUOxYXNiLy2sgyJPW0mOZvzXtC4dPaUmiVaFP5RMVzc8Lxhtg==}
+    resolution: {integrity: sha512-f4qLa0y3C4uuhYKgq+MU892WaQvtvmHqrEhHINUOxYXNiLy2sgyJPW0mOZvzXtC4dPaUmiVaFP5RMVzc8Lxhtg==, tarball: https://registry.npmjs.org/@nx/nx-darwin-arm64/-/nx-darwin-arm64-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -555,7 +555,7 @@ packages:
     optional: true
 
   /@nx/nx-darwin-x64@17.1.3:
-    resolution: {integrity: sha512-kh76ZjqkLeQUIAfTa9G/DFFf+e1sZ5ipDzk7zFGhZ2k68PoQoFdsFOO3C513JmuEdavspts6Hkifsqh61TaE+A==}
+    resolution: {integrity: sha512-kh76ZjqkLeQUIAfTa9G/DFFf+e1sZ5ipDzk7zFGhZ2k68PoQoFdsFOO3C513JmuEdavspts6Hkifsqh61TaE+A==, tarball: https://registry.npmjs.org/@nx/nx-darwin-x64/-/nx-darwin-x64-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -564,7 +564,7 @@ packages:
     optional: true
 
   /@nx/nx-freebsd-x64@17.1.3:
-    resolution: {integrity: sha512-CRuVL5ZSLb+Gc8vwMUUe9Pl/1Z26YtXMKTahBMQh2dac63vzLgzqIV4c66aduUl1x2M0kGYBSIIRG9z0/BgWeg==}
+    resolution: {integrity: sha512-CRuVL5ZSLb+Gc8vwMUUe9Pl/1Z26YtXMKTahBMQh2dac63vzLgzqIV4c66aduUl1x2M0kGYBSIIRG9z0/BgWeg==, tarball: https://registry.npmjs.org/@nx/nx-freebsd-x64/-/nx-freebsd-x64-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
@@ -573,7 +573,7 @@ packages:
     optional: true
 
   /@nx/nx-linux-arm-gnueabihf@17.1.3:
-    resolution: {integrity: sha512-KDBmd5tSrg93g/oij/eGW4yeVNVK3DBIM4VYAS2vtkIgVOGoqcQ+SEIeMK3nMUJP9jGyblt3QNj5ZsJBtScwQw==}
+    resolution: {integrity: sha512-KDBmd5tSrg93g/oij/eGW4yeVNVK3DBIM4VYAS2vtkIgVOGoqcQ+SEIeMK3nMUJP9jGyblt3QNj5ZsJBtScwQw==, tarball: https://registry.npmjs.org/@nx/nx-linux-arm-gnueabihf/-/nx-linux-arm-gnueabihf-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
@@ -582,7 +582,7 @@ packages:
     optional: true
 
   /@nx/nx-linux-arm64-gnu@17.1.3:
-    resolution: {integrity: sha512-W2tNL/7sIwoQKLmuy68Usd6TZzIZvxZt4UE30kDwGc2RSap6RCHAvDbzSxtW+L4+deC9UxX0Tty0VuW+J8FjSg==}
+    resolution: {integrity: sha512-W2tNL/7sIwoQKLmuy68Usd6TZzIZvxZt4UE30kDwGc2RSap6RCHAvDbzSxtW+L4+deC9UxX0Tty0VuW+J8FjSg==, tarball: https://registry.npmjs.org/@nx/nx-linux-arm64-gnu/-/nx-linux-arm64-gnu-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -591,7 +591,7 @@ packages:
     optional: true
 
   /@nx/nx-linux-arm64-musl@17.1.3:
-    resolution: {integrity: sha512-Oto3gkLd7yweuVUCsSHwm4JkAIbcxpPJP0ycRHI/PRHPMIOPiMX8r651QM1amMyKAbJtAe047nyb9Sh1X0FA4A==}
+    resolution: {integrity: sha512-Oto3gkLd7yweuVUCsSHwm4JkAIbcxpPJP0ycRHI/PRHPMIOPiMX8r651QM1amMyKAbJtAe047nyb9Sh1X0FA4A==, tarball: https://registry.npmjs.org/@nx/nx-linux-arm64-musl/-/nx-linux-arm64-musl-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -600,7 +600,7 @@ packages:
     optional: true
 
   /@nx/nx-linux-x64-gnu@17.1.3:
-    resolution: {integrity: sha512-pJS994sa5PBPFak93RydTB9KdEmiVb3rgiSB7PDBegphERbzHEB77B7G8M5TZ62dGlMdplIEKmdhY5XNqeAf9A==}
+    resolution: {integrity: sha512-pJS994sa5PBPFak93RydTB9KdEmiVb3rgiSB7PDBegphERbzHEB77B7G8M5TZ62dGlMdplIEKmdhY5XNqeAf9A==, tarball: https://registry.npmjs.org/@nx/nx-linux-x64-gnu/-/nx-linux-x64-gnu-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -609,7 +609,7 @@ packages:
     optional: true
 
   /@nx/nx-linux-x64-musl@17.1.3:
-    resolution: {integrity: sha512-4Hcx5Fg/88jV+bcTr6P0dM4unXNvKgrGJe3oK9/sgEhiW6pD2UAFjv16CCSRcWhDUAzUDqcwnD2fgg+vnAJG6g==}
+    resolution: {integrity: sha512-4Hcx5Fg/88jV+bcTr6P0dM4unXNvKgrGJe3oK9/sgEhiW6pD2UAFjv16CCSRcWhDUAzUDqcwnD2fgg+vnAJG6g==, tarball: https://registry.npmjs.org/@nx/nx-linux-x64-musl/-/nx-linux-x64-musl-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -618,7 +618,7 @@ packages:
     optional: true
 
   /@nx/nx-win32-arm64-msvc@17.1.3:
-    resolution: {integrity: sha512-dUasEuskmDxUL36XA0GZqSb9233suE4wKhxrMobyFBzHUZ2tq/unzOpPjYfqDBie4QIvF8tEpAjQsLds8LWgbw==}
+    resolution: {integrity: sha512-dUasEuskmDxUL36XA0GZqSb9233suE4wKhxrMobyFBzHUZ2tq/unzOpPjYfqDBie4QIvF8tEpAjQsLds8LWgbw==, tarball: https://registry.npmjs.org/@nx/nx-win32-arm64-msvc/-/nx-win32-arm64-msvc-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -627,7 +627,7 @@ packages:
     optional: true
 
   /@nx/nx-win32-x64-msvc@17.1.3:
-    resolution: {integrity: sha512-eTuTpBHFvA5NFJh/iosmqCL4JOAjDrwXLSMgfKrZKjiApHMG1T/5Hb+PrsNpt+WnGp94ur7c4Dtx4xD5vlpAEw==}
+    resolution: {integrity: sha512-eTuTpBHFvA5NFJh/iosmqCL4JOAjDrwXLSMgfKrZKjiApHMG1T/5Hb+PrsNpt+WnGp94ur7c4Dtx4xD5vlpAEw==, tarball: https://registry.npmjs.org/@nx/nx-win32-x64-msvc/-/nx-win32-x64-msvc-17.1.3.tgz}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2740,7 +2740,7 @@ packages:
     dev: true
 
   /json-stable-stringify@1.1.0:
-    resolution: {integrity: sha512-zfA+5SuwYN2VWqN1/5HZaDzQKLJHaBVMZIIM+wuYjdptkaQsqzDdqjqf+lZZJUuJq1aanHiY8LhH8LmH+qBYJA==}
+    resolution: {integrity: sha512-zfA+5SuwYN2VWqN1/5HZaDzQKLJHaBVMZIIM+wuYjdptkaQsqzDdqjqf+lZZJUuJq1aanHiY8LhH8LmH+qBYJA==, tarball: https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.1.0.tgz}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.5
@@ -2774,7 +2774,7 @@ packages:
     dev: false
 
   /jsonify@0.0.1:
-    resolution: {integrity: sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==}
+    resolution: {integrity: sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==, tarball: https://registry.npmjs.org/jsonify/-/jsonify-0.0.1.tgz}
     dev: false
 
   /jsonparse@1.3.1:
@@ -2794,7 +2794,7 @@ packages:
     dev: false
 
   /lefthook-darwin-arm64@1.5.4:
-    resolution: {integrity: sha512-jObXEh7QwHqLUzM61bpGMwOYMapIkR+ia9qiMVZgUWduRSFAHlSq6PU8UDF5WElUk2Ta7D3LY66l88UQvgy4AQ==}
+    resolution: {integrity: sha512-jObXEh7QwHqLUzM61bpGMwOYMapIkR+ia9qiMVZgUWduRSFAHlSq6PU8UDF5WElUk2Ta7D3LY66l88UQvgy4AQ==, tarball: https://registry.npmjs.org/lefthook-darwin-arm64/-/lefthook-darwin-arm64-1.5.4.tgz}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
@@ -2802,7 +2802,7 @@ packages:
     optional: true
 
   /lefthook-darwin-x64@1.5.4:
-    resolution: {integrity: sha512-CfgzmmOA9yvvO+nukNBSpY8J+sxZnrLuSK/aChOFSmooLB3h3imLYK7Z+IKC6LH2oFvQthKtohp47YHJNmDpuw==}
+    resolution: {integrity: sha512-CfgzmmOA9yvvO+nukNBSpY8J+sxZnrLuSK/aChOFSmooLB3h3imLYK7Z+IKC6LH2oFvQthKtohp47YHJNmDpuw==, tarball: https://registry.npmjs.org/lefthook-darwin-x64/-/lefthook-darwin-x64-1.5.4.tgz}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -2810,7 +2810,7 @@ packages:
     optional: true
 
   /lefthook-freebsd-arm64@1.5.4:
-    resolution: {integrity: sha512-PH6P6mDH+ElwvhaaJwua9Gck0On3AmetG50Mp6uSjbgf1H4MYmrFO0M5Q5tSFNnw7Fb61yRxzvWtW3lRMIatHA==}
+    resolution: {integrity: sha512-PH6P6mDH+ElwvhaaJwua9Gck0On3AmetG50Mp6uSjbgf1H4MYmrFO0M5Q5tSFNnw7Fb61yRxzvWtW3lRMIatHA==, tarball: https://registry.npmjs.org/lefthook-freebsd-arm64/-/lefthook-freebsd-arm64-1.5.4.tgz}
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
@@ -2818,7 +2818,7 @@ packages:
     optional: true
 
   /lefthook-freebsd-x64@1.5.4:
-    resolution: {integrity: sha512-Purw1K5UTEL5UrcmKOXbQMpeAk0WiTStOny4MlwXquNC/pF85L4UWaxIwx5URO1SSrJ1D6WT0+P9HoLiAWZNhQ==}
+    resolution: {integrity: sha512-Purw1K5UTEL5UrcmKOXbQMpeAk0WiTStOny4MlwXquNC/pF85L4UWaxIwx5URO1SSrJ1D6WT0+P9HoLiAWZNhQ==, tarball: https://registry.npmjs.org/lefthook-freebsd-x64/-/lefthook-freebsd-x64-1.5.4.tgz}
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
@@ -2826,7 +2826,7 @@ packages:
     optional: true
 
   /lefthook-linux-arm64@1.5.4:
-    resolution: {integrity: sha512-Y2vlBwQLmm6fqsioo7C5nmaaRCU4HVi2bZW/D4DI2TUSqtzVCSM0Jdxk8exMWOyMz5yV1gQUJjIBYZNFtzyRlg==}
+    resolution: {integrity: sha512-Y2vlBwQLmm6fqsioo7C5nmaaRCU4HVi2bZW/D4DI2TUSqtzVCSM0Jdxk8exMWOyMz5yV1gQUJjIBYZNFtzyRlg==, tarball: https://registry.npmjs.org/lefthook-linux-arm64/-/lefthook-linux-arm64-1.5.4.tgz}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
@@ -2834,7 +2834,7 @@ packages:
     optional: true
 
   /lefthook-linux-x64@1.5.4:
-    resolution: {integrity: sha512-JhzATbDWsk7nGPiF+4+pSLYtGYCNnI52km+YE1KnXmDtvWSk+ScRLSkuxjAMtByXpzEuXrWkeuGs/qObY54CNQ==}
+    resolution: {integrity: sha512-JhzATbDWsk7nGPiF+4+pSLYtGYCNnI52km+YE1KnXmDtvWSk+ScRLSkuxjAMtByXpzEuXrWkeuGs/qObY54CNQ==, tarball: https://registry.npmjs.org/lefthook-linux-x64/-/lefthook-linux-x64-1.5.4.tgz}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -2842,7 +2842,7 @@ packages:
     optional: true
 
   /lefthook-windows-arm64@1.5.4:
-    resolution: {integrity: sha512-IOcsVRZDisv3NiTlzB11gb8RLYFGu0Mmd3RnE44c+VuUgTOen1S2XDnHDxdTk1zimAKHvcjY6u5dmpiaPFiCEA==}
+    resolution: {integrity: sha512-IOcsVRZDisv3NiTlzB11gb8RLYFGu0Mmd3RnE44c+VuUgTOen1S2XDnHDxdTk1zimAKHvcjY6u5dmpiaPFiCEA==, tarball: https://registry.npmjs.org/lefthook-windows-arm64/-/lefthook-windows-arm64-1.5.4.tgz}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
@@ -2850,7 +2850,7 @@ packages:
     optional: true
 
   /lefthook-windows-x64@1.5.4:
-    resolution: {integrity: sha512-flkNbkNhLMFiDb6ucUue4dVZBvLiKSXMbk52+7MgZGjPPbuzIlUh/YKs0FxZv6pnSrtuWtUgcw48Fq9+ijxpVA==}
+    resolution: {integrity: sha512-flkNbkNhLMFiDb6ucUue4dVZBvLiKSXMbk52+7MgZGjPPbuzIlUh/YKs0FxZv6pnSrtuWtUgcw48Fq9+ijxpVA==, tarball: https://registry.npmjs.org/lefthook-windows-x64/-/lefthook-windows-x64-1.5.4.tgz}
     cpu: [x64]
     os: [win32]
     requiresBuild: true

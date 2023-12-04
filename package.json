@@ -30,7 +30,7 @@
     "@biomejs/biome": "1.4.0",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
-    "@daotl/biome-config": "0.0.3",
+    "@daotl/biome-config": "0.0.4",
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "npm:@daotl/manypkg-cli@^0.21.0",
     "commitiquette": "^1.2.1",
