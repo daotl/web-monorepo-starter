@@ -10,6 +10,7 @@
     "start": "echo start"
   },
   "dependencies": {
+    "desktop": "workspace:*",
     "myutil": "workspace:*",
     "yourutil": "workspace:*"
   }
