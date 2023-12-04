@@ -77,12 +77,47 @@ step_docker_build_push: &step_docker_build_push
 on:
   push:
     branches: [main, single-page, feat/*, fix/*, chore/*, debug/*]
+    paths:
+      - 'app/desktop/**'
+      - 'app/web/**'
+
   pull_request:
     branches: [main]
   workflow_dispatch: {}
 
 jobs:
   web:
+    runs-on: ubuntu-latest
+
+    # Workaround for tools (e.g., Node.js) not cached:
+    # https://gitea.com/gitea/act_runner/issues/70#issuecomment-734824
+    env:
+      RUNNER_TOOL_CACHE: /toolcache
+
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Set project variables
+        id: projectVars
+        run: |
+          echo project=web >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
+      - *step_commonVars
+      - *step_checkout
+      - *step_setup_pnpm
+      - *step_setup_nodejs
+      - *step_install_concurrently
+      - *step_install_deps
+      - *step_build_lint_main
+      - *step_build_lint_not_main
+      - *step_docker_setup_buildx
+      - *step_docker_login
+      - *step_docker_build_push
+  desktop:
     runs-on: ubuntu-latest
 
     # Workaround for tools (e.g., Node.js) not cached:
