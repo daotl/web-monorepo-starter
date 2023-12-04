@@ -24,13 +24,13 @@ export function init(namespace: string) {
       imageTag?: string
       hostname: string
       caddyfilePath: string
-    }): { deploymentName: P.Output<string>, serviceIp: P.Output<string> } {
+    }): { deploymentName: P.Output<string>; serviceIp: P.Output<string> } {
       const image = `${imageName}:${imageTag}`
 
       const [_cmCaddyfile, cmCaddyfileName] = this.cmCaddyfile(
         appName,
-        appLabels,
         caddyfilePath,
+        appLabels,
       )
 
       const deploy = this.deployment(appName, appLabels, image, cmCaddyfileName)
@@ -55,6 +55,7 @@ export function init(namespace: string) {
     ): [$.core.v1.ConfigMap, P.Output<string>] {
       const cm = new $.core.v1.ConfigMap(name, {
         metadata: { namespace, labels },
+        // biome-ignore lint/style/useNamingConvention: ignore
         data: { FEATURE_X: 'true' },
       })
       return [cm, cm.metadata.apply(m => m.name)]
@@ -62,8 +63,8 @@ export function init(namespace: string) {
 
     cmCaddyfile(
       name: string,
+      caddyfilePath = '../docker/Caddyfile',
       labels: Record<string, string> = {},
-      caddyfilePath: string,
     ): [$.core.v1.ConfigMap, P.Output<string>] {
       const cm = new $.core.v1.ConfigMap(name, {
         metadata: {
@@ -71,6 +72,7 @@ export function init(namespace: string) {
           labels,
         },
         data: {
+          // biome-ignore lint/style/useNamingConvention: ignore
           Caddyfile: fs.readFileSync(caddyfilePath).toString(),
         },
       })
@@ -128,7 +130,6 @@ export function init(namespace: string) {
         },
       }
       if (argsOverride) {
-        /* eslint-disable ts/ban-ts-comment */
         // @ts-expect-error
         args = merge(args, argsOverride, { arrayMerge: mergeArrayByName })
       }
