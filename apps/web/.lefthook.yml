@@ -5,8 +5,3 @@ pre-commit:
       root: apps/web/
       run: npx eslint --cache --fix {staged_files}
       stage_fixed: true
-    apps-web-stylelint:
-      root: apps/web/
-      glob: 'src/**.{css,scss,vue,tsx}'
-      run: npx stylelint --fix {staged_files}
-      stage_fixed: true
