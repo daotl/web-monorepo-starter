@@ -1,26 +1,47 @@
 name: build
 
-step_docker_setup_buildx: &step_docker_setup_buildx
-  uses: docker/setup-buildx-action@v3
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+snippets:
+  step-set-project-vars: &step-set-project-vars
+    name: Set project variables
+    id: projectVars
+    run: |
+      tmp = ${{ github.job }}
+      docker_image=daotl/web-monorepo-starter-${tmp#"docker-"}
+      echo docker_image=$docker_image >> $GITHUB_OUTPUT
+      echo commit_id_image=$docker_image:commit-${GITHUB_SHA::8}
 
-step_docker_login: &step_docker_login
-  uses: docker/login-action@v3
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
-  with:
-    username: ${{ secrets.DOCKERHUB_USERNAME }}
-    password: ${{ secrets.DOCKERHUB_TOKEN  }}
+  step-docker-setup-buildx: &step-docker-setup-buildx
+    uses: docker/setup-buildx-action@v3
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
 
-step_docker_build_push: &step_docker_build_push
-  uses: docker/build-push-action@v5
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
-  with:
-    context: apps/${{ github.job }}
-    file: apps/${{github.job}}/docker/Dockerfile.ci
-    push: true
-    tags: ${{ steps.commonVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.commonVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.commonVars.outputs.docker_image }}:latest
-    # cache-from: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
-    # cache-to: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
+  step-docker-login: &step-docker-login
+    uses: docker/login-action@v3
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+    with:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN  }}
+
+  step-docker-build-push: &step-docker-build-push
+    uses: docker/build-push-action@v5
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.node-version == '20.x'
+    with:
+      context: apps/${{ github.job }}
+      file: apps/${{github.job}}/docker/Dockerfile.ci
+      push: true
+      tags: ${{ steps.commonVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.commonVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.commonVars.outputs.docker_image }}:latest
+      # cache-from: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
+      # cache-to: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
+
+  job-docker: &job-docker
+    needs: [build]
+    runs-on: ubuntu-latest
+    env:
+      RUNNER_TOOL_CACHE: /toolcache
+    steps:
+      - *step-set-project-vars
+      - *step-docker-setup-buildx
+      - *step-docker-login
+      - *step-docker-build-push
 
 on:
   push:
@@ -52,18 +73,15 @@ jobs:
         id: commonVars
         run: |
           commit_id_8=${GITHUB_SHA::8}
-          docker_image=daotl/web-monorepo-starter-${{ github.job }}
           echo repo_link=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
           echo commit_id_8=$commit_id_8 >> $GITHUB_OUTPUT
-          echo docker_image=$docker_image >> $GITHUB_OUTPUT
-          echo commit_id_image=$docker_image:commit-$commit_id_8
 
       # Needs to come first, `actions/setup-node` uses `pnpm-lock.yaml`
       - uses: actions/checkout@v3
         with:
           token: '${{ secrets.REPOSITORY_TOKEN }}'
           ssh-strict: false
-          # We need to fetch all branches and commits so that Nx affected has a base to compare against.
+          # TO IMPROVE: We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
@@ -89,30 +107,27 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
 
+      - name: install zx
+        run: pnpm add -g zx
+
       - name: pnpm install
-        run: CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile --filter ${{ steps.setSHAs.outputs.apps }} ${{ steps.setSHAs.outputs.libs }}
+        # Fix: `pnpm install --filter` installing dependencies of all projects
+        # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
+        run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile ${{ steps.setSHAs.outputs.apps }} ${{ steps.setSHAs.outputs.libs }}
 
-    step_build_lint_main: &step_build_lint_main
-      name: build-lint:main
-      if: github.ref == 'refs/heads/main'
-      run: |
-        "pnpm nx build -p ${{ github.job }}" "pnpm nx lint -p ${{ github.job }}"
+      - name: build & lint ("main" branch)
+        if: github.ref == 'refs/heads/main'
+        run: pnpm nx affected -t build lint
 
-    step_build_lint_not_main: &step_build_lint_not_main
-      name: build-lint:!main
-      if: github.ref != 'refs/heads/main'
-      # `git fetch`: to workaround https://github.com/actions/checkout/issues/296#issuecomment-1348164731
-      run: |
-        git fetch origin main:refs/remotes/origin/main
-        git reset --soft refs/remotes/origin/main
-        # FIXME: only run lefthook on project files
-        concurrently "pnpm nx build -p ${{ github.job }}" "npx lefthook run pre-commit"
-
-      - name: Set project variables
-        id: projectVars
+      - name: build & lint (not "main" branch)
+        if: github.ref != 'refs/heads/main'
         run: |
-          echo project=web >> $GITHUB_OUTPUT
-          cat $GITHUB_OUTPUT
+          # `git fetch`: to workaround https://github.com/actions/checkout/issues/296#issuecomment-1348164731
+          # Not needed now for `fetch-depth: 0`
+          # git fetch origin main:refs/remotes/origin/main
+          # git reset --soft refs/remotes/origin/main
+          pnpm add -g concurrently
+          concurrently "pnpm nx affected -t build" "npx lefthook run pre-commit"
 
       - *step_commonVars
       - *step_checkout
