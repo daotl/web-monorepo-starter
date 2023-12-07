@@ -19,6 +19,7 @@ snippets:
       docker_image=daotl/web-monorepo-starter-${proj}
       echo docker_image=$docker_image >> $GITHUB_OUTPUT
       echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commid_id_8 }}
+      sleep 1000
       if [[ ${{ needs.build.outputs.affectedProjs }} =~ (^|,)${proj}($|,) ]]; then
         affected = true
       else
