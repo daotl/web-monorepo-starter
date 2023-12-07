@@ -1,0 +1,8 @@
+{
+  "name": "@daotl/myutil",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "1.4.0"
+  }
+}

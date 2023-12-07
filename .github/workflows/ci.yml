@@ -100,6 +100,10 @@ jobs:
       #     echo "BASE: ${{ env.NX_BASE }}" or ${{ steps.setSHAs.outputs.base }}"
       #     echo "HEAD: ${{ env.NX_HEAD }}" or ${{ steps.setSHAs.outputs.head }}"
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: install zx,@traf/nx @traf/nx
         run: pnpm add -g zx
 
@@ -111,10 +115,6 @@ jobs:
           projs=${projs%]}
           echo Affected projects: ${projs}
           echo projs=${projs} >> $GITHUB_OUTPUT
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
