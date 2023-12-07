@@ -125,7 +125,7 @@ jobs:
       - name: pnpm install
         # Fix: `pnpm install --filter` installing dependencies of all projects
         # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
-        run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile ${{ steps.affected.outputs.projs }}
+        run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile=true ${{ steps.affected.outputs.projs }}
 
       - name: build & lint ("main" branch)
         if: github.ref == 'refs/heads/main'
