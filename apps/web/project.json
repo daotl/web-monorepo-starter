@@ -1,0 +1,14 @@
+{
+  "name": "web",
+  "sourceRoot": "apps/web/src",
+  "targets": {
+    "build": {
+      "command": "echo build",
+      "options": {}
+    },
+    "lint": {
+      "command": "echo lint",
+      "options": {}
+    }
+  }
+}

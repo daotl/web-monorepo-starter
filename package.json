@@ -33,6 +33,7 @@
     "@daotl/biome-config": "0.0.4",
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "npm:@daotl/manypkg-cli@^0.21.1",
+    "@traf/nx": "^0.0.16",
     "commitiquette": "^1.2.1",
     "commitizen": "^4.3.0",
     "commitlint-config-pnpm-workspace": "^0.2.2",

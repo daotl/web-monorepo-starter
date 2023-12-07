@@ -1,14 +1,13 @@
 {
-  "name": "desktop",
+  "name": "@daotl/desktop",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "build": "echo build",
-    "dev": "echo dev",
-    "lint": "echo lint",
-    "start": "echo start"
-  },
   "dependencies": {
-    "myutil": "workspace:*"
+    "@daotl/web": "workspace:*",
+    "@daotl/yourutil": "workspace:*"
+  },
+  "devDependencies": {
+    "@daotl/eslint-config": "^2.0.0-beta.3",
+    "eslint": "^8.54.0"
   }
 }

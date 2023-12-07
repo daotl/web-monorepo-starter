@@ -1,0 +1,14 @@
+{
+  "name": "desktop",
+  "sourceRoot": "apps/desktop/src",
+  "targets": {
+    "build": {
+      "command": "echo build",
+      "options": {}
+    },
+    "lint": {
+      "command": "echo lint",
+      "options": {}
+    }
+  }
+}

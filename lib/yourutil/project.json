@@ -1,0 +1,14 @@
+{
+  "name": "yourutil",
+  "sourceRoot": "lib/yourutil/src",
+  "targets": {
+    "build": {
+      "command": "echo build",
+      "options": {}
+    },
+    "lint": {
+      "command": "echo lint",
+      "options": {}
+    }
+  }
+}

@@ -1,13 +1,7 @@
 {
-  "name": "yourutil",
+  "name": "@daotl/yourutil",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "build": "echo build",
-    "dev": "echo dev",
-    "lint": "echo lint",
-    "start": "echo start"
-  },
   "devDependencies": {
     "@biomejs/biome": "1.4.0"
   }

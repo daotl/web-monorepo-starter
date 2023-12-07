@@ -1,18 +1,10 @@
 {
-  "name": "web",
+  "name": "@daotl/web",
   "type": "module",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "build": "echo build",
-    "dev": "echo dev",
-    "lint": "echo lint",
-    "start": "echo start"
-  },
   "dependencies": {
-    "desktop": "workspace:*",
-    "myutil": "workspace:*",
-    "yourutil": "workspace:*"
+    "@daotl/myutil": "workspace:*"
   },
   "devDependencies": {
     "@daotl/eslint-config": "^2.0.0-beta.3",
