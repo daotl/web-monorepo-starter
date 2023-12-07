@@ -127,19 +127,8 @@ jobs:
         # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
         run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile=true ${{ steps.affected.outputs.projs }}
 
-      - name: build & lint ("main" branch)
-        if: github.ref == 'refs/heads/main'
+      - name: build & lint
         run: pnpm nx affected -t build lint
-
-      - name: build & lint (not "main" branch)
-        if: github.ref != 'refs/heads/main'
-        run: |
-          # `git fetch`: to workaround https://github.com/actions/checkout/issues/296#issuecomment-1348164731
-          # Not needed now for `fetch-depth: 0`
-          # git fetch origin main:refs/remotes/origin/main
-          # git reset --soft refs/remotes/origin/main
-          pnpm add -g concurrently
-          concurrently "pnpm nx affected -t build" "npx lefthook run pre-commit"
 
   docker-web: *job-docker
 
