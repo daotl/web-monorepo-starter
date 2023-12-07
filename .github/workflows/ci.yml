@@ -104,6 +104,12 @@ jobs:
         with:
           version: 8
 
+      - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: pnpm
+
       - name: install zx,@traf/nx @traf/nx
         run: pnpm add -g zx
 
@@ -115,12 +121,6 @@ jobs:
           projs=${projs%]}
           echo Affected projects: ${projs}
           echo projs=${projs} >> $GITHUB_OUTPUT
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
 
       - name: pnpm install
         # Fix: `pnpm install --filter` installing dependencies of all projects
