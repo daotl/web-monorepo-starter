@@ -21,10 +21,6 @@
       "inputs": [
         "default"
       ],
-      "outputs": [
-        "{projectRoot}/dist",
-        "{projectRoot}/build"
-      ],
       "cache": true
     },
     "test": {
@@ -48,17 +44,11 @@
       "cache": false
     },
     "lint": {
-      "input": [
-        "!{projectRoot}/dist",
-        "!{projectRoot}/build"
-      ],
+      "input": [],
       "cache": true
     },
     "lint:fix": {
-      "input": [
-        "!{projectRoot}/dist",
-        "!{projectRoot}/build"
-      ],
+      "input": [],
       "cache": true
     },
     "deploy": {

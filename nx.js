@@ -2,7 +2,8 @@ import fs from 'node:fs'
 
 import * as R from 'remeda'
 
-const outputs = ['{projectRoot}/dist', '{projectRoot}/build']
+// Default: ['{projectRoot}/dist', '{projectRoot}/build']
+const outputs = []
 
 const inputsIgnore = R.map(R.map(outputs, R.concat), fn => fn('!'))
 
@@ -20,7 +21,7 @@ const config = {
     build: {
       dependsOn: ['^build'],
       inputs: ['default'],
-      outputs,
+      // outputs,
       cache: true,
     },
 
