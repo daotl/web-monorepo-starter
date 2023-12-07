@@ -14,12 +14,12 @@ snippets:
     id: projectVars
     run: |
       tmp=${{ github.job }}
-      proj=${tmp#"docker-"}
+      proj=${tmp#docker-}
       echo proj=$proj >> $GITHUB_OUTPUT
       docker_image=daotl/web-monorepo-starter-${proj}
       echo docker_image=$docker_image >> $GITHUB_OUTPUT
       echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commid_id_8 }}
-      if [[ ${{ needs.build.outputs.affectedApps }} =~ (^|,)${proj}($|,) ]]; then
+      if [[ ${{ needs.build.outputs.affectedProjs }} =~ (^|,)${proj}($|,) ]]; then
         affected = true
       else
         affected =
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      affectedApps: ${{ steps.affected.outputs.apps }}
+      affectedProjs: ${{ steps.affected.outputs.apps }}
 
     # Workaround for tools (e.g., Node.js) not cached:
     # https://gitea.com/gitea/act_runner/issues/70#issuecomment-734824
@@ -90,8 +90,6 @@ jobs:
       # Needs to come first, `actions/setup-node` uses `pnpm-lock.yaml`
       - uses: actions/checkout@v3
         with:
-          token: '${{ secrets.REPOSITORY_TOKEN }}'
-          ssh-strict: false
           # TO IMPROVE: We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
 
@@ -102,11 +100,17 @@ jobs:
       #     echo "BASE: ${{ env.NX_BASE }}" or ${{ steps.setSHAs.outputs.base }}"
       #     echo "HEAD: ${{ env.NX_HEAD }}" or ${{ steps.setSHAs.outputs.head }}"
 
+      - name: install zx,@traf/nx @traf/nx
+        run: pnpm add -g zx
+
       - name: Calculate affected projects
-        uses: e-square-io/nx-affected-matrix@v2
         id: affected
-        with:
-          targets: build
+        run: |
+          projs=$(npx @traf/nx affected --base=${NX_BASE} --json=true)
+          projs=${projs#[}
+          projs=${projs%]}
+          echo Affected projects: ${projs}
+          echo projs=${projs} >> $GITHUB_OUTPUT
 
       - uses: pnpm/action-setup@v2
         with:
@@ -118,13 +122,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
 
-      - name: install zx
-        run: pnpm add -g zx
-
       - name: pnpm install
         # Fix: `pnpm install --filter` installing dependencies of all projects
         # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
-        run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile ${{ steps.affected.outputs.apps }} ${{ steps.affected.outputs.libs }}
+        run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile ${{ steps.affected.outputs.projs }}
 
       - name: build & lint ("main" branch)
         if: github.ref == 'refs/heads/main'
