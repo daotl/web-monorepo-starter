@@ -15,7 +15,11 @@ const config = {
       '{projectRoot}/tsconfig.json',
       { env: 'NODE_ENV' },
     ],
-    default: ['{projectRoot}/**/*', 'sharedGlobals'],
+    default: [
+      'sharedGlobals',
+      '{projectRoot}/**/*',
+      '!{projectRoot}/**/?(*.)+spec.ts',
+    ],
   },
   targetDefaults: {
     build: {
