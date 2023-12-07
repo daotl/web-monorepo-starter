@@ -28,18 +28,18 @@ snippets:
 
   step-docker-setup-buildx: &step-docker-setup-buildx
     uses: docker/setup-buildx-action@v3
-    if: ${{ steps.projectVars.affected }} == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: steps.projectVars.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
 
   step-docker-login: &step-docker-login
     uses: docker/login-action@v3
-    if: ${{ steps.projectVars.affected }} == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: steps.projectVars.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
     with:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN  }}
 
   step-docker-build-push: &step-docker-build-push
     uses: docker/build-push-action@v5
-    if: ${{ steps.projectVars.affected }} == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: steps.projectVars.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
     with:
       context: apps/${{ github.job }}
       file: apps/${{github.job}}/docker/Dockerfile.ci
