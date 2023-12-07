@@ -44,9 +44,9 @@ snippets:
       context: apps/${{ github.job }}
       file: apps/${{github.job}}/docker/Dockerfile.ci
       push: true
-      tags: ${{ steps.commonVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.commonVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.commonVars.outputs.docker_image }}:latest
-      # cache-from: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
-      # cache-to: type=registry,ref=${{ steps.commonVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
+      tags: ${{ steps.projectVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.projectVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.projectVars.outputs.docker_image }}:latest
+      # cache-from: type=registry,ref=${{ steps.projectVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
+      # cache-to: type=registry,ref=${{ steps.projectVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
 
   job-docker: &job-docker
     needs: [build]
@@ -105,10 +105,10 @@ jobs:
           version: 8
 
       - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: pnpm
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
       - name: install zx,@traf/nx @traf/nx
         run: pnpm add -g zx
