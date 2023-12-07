@@ -19,11 +19,15 @@ snippets:
       docker_image=daotl/web-monorepo-starter-${proj}
       echo docker_image=$docker_image >> $GITHUB_OUTPUT
       echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commid_id_8 }}
-      if [[ ${{ needs.build.outputs.affectedProjs }} =~ (^|,)${proj}($|,) ]]; then
-        affected = true
-      else
-        affected =
-      fi
+      affected=$(
+        bash << EOF
+          if [[ ${{ needs.build.outputs.affectedProjs }} =~ (^|,)${proj}($|,) ]]; then
+            echo true
+          else
+            echo false
+          fi
+        EOF
+      )
       echo affected=$affected >> $GITHUB_OUTPUT
 
   step-docker-setup-buildx: &step-docker-setup-buildx
