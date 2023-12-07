@@ -119,6 +119,7 @@ jobs:
           projs=$(npx @traf/nx affected --base=${NX_BASE} --json=true)
           projs=${projs#[}
           projs=${projs%]}
+          projs=$(echo ${projs} | sed -e 's/\"//g')
           echo Affected projects: ${projs}
           echo projs=${projs} >> $GITHUB_OUTPUT
 
