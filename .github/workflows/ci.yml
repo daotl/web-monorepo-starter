@@ -16,13 +16,13 @@ snippets:
       tmp=${{ github.job }}
       proj=${tmp#docker-}
       echo proj=$proj >> $GITHUB_OUTPUT
-      docker_image=daotl/web-monorepo-starter-${proj}
-      echo docker_image=$docker_image >> $GITHUB_OUTPUT
-      echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commit_id_8 }}
-      if echo '${{ needs.build.outputs.affectedProjs }}' | grep -qE '(^|,)${proj}($|,)'; then
+      if echo '${{ needs.build.outputs.affectedProjs }}' | grep -qE "(^|,)${proj}($|,)"; then
         affected=true
       fi
       echo affected=$affected >> $GITHUB_OUTPUT
+      docker_image=daotl/web-monorepo-starter-${proj}
+      echo docker_image=$docker_image >> $GITHUB_OUTPUT
+      echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commit_id_8 }}
 
   step-docker-setup-buildx: &step-docker-setup-buildx
     uses: docker/setup-buildx-action@v3
