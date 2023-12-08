@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      affectedProjs: ${{ steps.affected.outputs.apps }}
+      affectedProjs: ${{ steps.affected.outputs.projs }}
 
     # Workaround for tools (e.g., Node.js) not cached:
     # https://gitea.com/gitea/act_runner/issues/70#issuecomment-734824
