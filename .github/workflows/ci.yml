@@ -113,7 +113,7 @@ jobs:
       - name: Calculate affected projects
         id: affected
         run: |
-          projs=$(npx @traf/nx affected --base=${NX_BASE} --json=true)
+          projs=$(traf-nx affected --base=${NX_BASE} --json=true)
           projs=${projs#[}
           projs=${projs%]}
           projs=$(echo ${projs} | sed -e 's/\"//g')
