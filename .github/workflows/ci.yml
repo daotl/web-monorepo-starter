@@ -101,15 +101,14 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
+          run_install: |
+            - args: [--global, zx, '@traf/nx']
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-
-      - name: install zx,@traf/nx
-        run: pnpm add -g zx @traf/nx
 
       - name: Calculate affected projects
         id: affected
