@@ -13,7 +13,7 @@ LABEL cn.fusiongalaxy.version.release-date="2023-12"
 
 # Workaround for https://github.com/alpinelinux/docker-alpine/issues/98#issuecomment-679278499
 RUN sed -i 's/https/http/' /etc/apk/repositories \
-    && apk add --no-cache bash
+  && apk add --no-cache bash
 
 COPY --link docker/Caddyfile /etc/caddy/
 COPY --link dist /public

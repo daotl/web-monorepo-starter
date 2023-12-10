@@ -3,8 +3,11 @@
   "sourceRoot": "apps/web/src",
   "targets": {
     "build": {
-      "command": "echo build",
-      "options": {}
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./apps/web",
+        "command": "mkdir dist && echo 'app' > dist/index.js"
+      }
     },
     "lint": {
       "command": "echo lint",

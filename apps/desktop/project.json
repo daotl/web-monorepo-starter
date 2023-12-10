@@ -3,8 +3,11 @@
   "sourceRoot": "apps/desktop/src",
   "targets": {
     "build": {
-      "command": "echo build",
-      "options": {}
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./apps/desktop",
+        "command": "mkdir dist && echo 'app' > dist/index.js"
+      }
     },
     "lint": {
       "command": "echo lint",
