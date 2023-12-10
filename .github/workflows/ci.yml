@@ -6,8 +6,9 @@ snippets:
     id: commonVars
     run: |
       commit_id_8=${GITHUB_SHA::8}
-      echo commit_id_8=$commit_id_8 >> $GITHUB_OUTPUT
-      echo repo_link=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
+      CONTAINER_REGISTRY_DOMAIN=docker.io
+      echo commit_id_8=${commit_id_8} >> $GITHUB_OUTPUT
+      echo repo_url=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
 
   step-set-project-vars: &step-set-project-vars
     name: Set project variables
@@ -19,10 +20,10 @@ snippets:
       if echo '${{ needs.build.outputs.affectedProjs }}' | grep -qE "(^|,)${proj}($|,)"; then
         affected=true
       fi
-      echo affected=$affected >> $GITHUB_OUTPUT
-      docker_image=daotl/web-monorepo-starter-${proj}
-      echo docker_image=$docker_image >> $GITHUB_OUTPUT
-      echo commit_id_image=$docker_image:commit-${{ steps.commonVars.outputs.commit_id_8 }}
+      echo affected=${affected} >> $GITHUB_OUTPUT
+      docker_image=${{ steps.commonVars.outputs.container_registry_domain }}/daotl/web-monorepo-starter-${proj}
+      echo docker_image=${docker_image} >> $GITHUB_OUTPUT
+      echo commit_id_image=${docker_image}:commit-${{ steps.commonVars.outputs.commit_id_8 }}
 
   step-docker-setup-buildx: &step-docker-setup-buildx
     uses: docker/setup-buildx-action@v3
