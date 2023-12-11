@@ -1,64 +1,5 @@
 name: build
 
-snippets:
-  step-set-common-vars: &step-set-common-vars
-    name: Set common variables
-    id: commonVars
-    run: |
-      commit_id_8=${GITHUB_SHA::8}
-      CONTAINER_REGISTRY_DOMAIN=docker.io
-      echo commit_id_8=${commit_id_8} >> $GITHUB_OUTPUT
-      echo repo_url=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
-
-  step-set-project-vars: &step-set-project-vars
-    name: Set project variables
-    id: projectVars
-    run: |
-      tmp=${{ github.job }}
-      proj=${tmp#docker-}
-      echo proj=$proj >> $GITHUB_OUTPUT
-      if echo '${{ needs.build.outputs.affectedProjs }}' | grep -qE "(^|,)${proj}($|,)"; then
-        affected=true
-      fi
-      echo affected=${affected} >> $GITHUB_OUTPUT
-      docker_image=${{ steps.commonVars.outputs.container_registry_domain }}/daotl/web-monorepo-starter-${proj}
-      echo docker_image=${docker_image} >> $GITHUB_OUTPUT
-      echo commit_id_image=${docker_image}:commit-${{ steps.commonVars.outputs.commit_id_8 }}
-
-  step-docker-setup-buildx: &step-docker-setup-buildx
-    uses: docker/setup-buildx-action@v3
-    if: steps.projectVars.outputs.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-  step-docker-login: &step-docker-login
-    uses: docker/login-action@v3
-    if: steps.projectVars.outputs.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
-    with:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN  }}
-
-  step-docker-build-push: &step-docker-build-push
-    uses: docker/build-push-action@v5
-    if: steps.projectVars.outputs.affected == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push'
-    with:
-      context: apps/${{ github.job }}
-      file: apps/${{github.job}}/docker/Dockerfile.ci
-      push: true
-      tags: ${{ steps.projectVars.outputs.docker_image }}:commit-${{ steps.commonVars.outputs.commit_id_8 }},${{ steps.projectVars.outputs.docker_image }}:${{ github.ref_name }},${{ steps.projectVars.outputs.docker_image }}:latest
-      # cache-from: type=registry,ref=${{ steps.projectVars.outputs.docker_image }}:buildcache-${{ github.ref_name }}
-      # cache-to: type=registry,ref=${{ steps.projectVars.outputs.docker_image }}:buildcache-${{ github.ref_name }},mode=max
-
-  job-docker: &job-docker
-    needs: [build]
-    runs-on: ubuntu-latest
-    env:
-      RUNNER_TOOL_CACHE: /toolcache
-    steps:
-      - *step-set-common-vars
-      - *step-set-project-vars
-      - *step-docker-setup-buildx
-      - *step-docker-login
-      - *step-docker-build-push
-
 on:
   push:
     branches: [main, single-page, feat/*, fix/*, chore/*, debug/*]
@@ -84,7 +25,13 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
-      - *step-set-common-vars
+      - name: Set common variables
+        id: common-vars
+        run: |
+          commit_id_8=${GITHUB_SHA::8}
+          CONTAINER_REGISTRY_DOMAIN=docker.io
+          echo commit_id_8=${commit_id_8} >> $GITHUB_OUTPUT
+          echo repo_url=https://github.com/${{ github.repository }} >> $GITHUB_OUTPUT
 
       # Needs to come first, `actions/setup-node` uses `pnpm-lock.yaml`
       - uses: actions/checkout@v3
@@ -126,9 +73,23 @@ jobs:
         # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
         run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile=true ${{ steps.affected.outputs.projs }}
 
-      - name: build & lint
-        run: pnpm nx affected -t build lint
+      - run: pnpm nx affected -t build lint
 
-  docker-web: *job-docker
+      # Build Docker images
 
-  docker-desktop: *job-docker
+      - uses: docker/setup-buildx-action@v3
+        id: docker-setup-buildx
+        if: github.event_name == 'push' && matrix.node-version == '20.x'
+
+      - uses: docker/login-action@v3
+        if: github.event_name == 'push' && matrix.node-version == '20.x'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN  }}
+
+      - name: Build and push Docker images
+        if: github.event_name == 'push' && matrix.node-version == '20.x'
+        env:
+          INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_BUILDER: ${{ steps.docker-setup-buildx.outputs.name }}
+        run: pnpm nx affected -t container -c ci

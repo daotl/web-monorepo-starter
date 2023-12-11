@@ -1,17 +1,42 @@
 {
   "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web/src",
   "targets": {
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "./apps/web",
-        "command": "mkdir dist && echo 'app' > dist/index.js"
+        "command": "mkdir -p dist && echo 'app' > dist/index.js"
       }
     },
     "lint": {
       "command": "echo lint",
       "options": {}
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "engine": "docker",
+        "context": "apps/web",
+        "file": "apps/web/docker/Dockerfile.ci"
+      },
+      "configurations": {
+        "dev": {
+          "tags": [
+            "daotl/web-monorepo-starter-web:dev"
+          ]
+        },
+        "ci": {
+          "metadata": {
+            "images": [
+              "daotl/web-monorepo-starter-web"
+            ]
+          }
+          // "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-${{ github.ref_name }}"],
+          // "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-${{ github.ref_name }},mode=max"]
+        }
+      }
     }
   }
 }

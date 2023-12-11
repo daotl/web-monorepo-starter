@@ -58,6 +58,24 @@ const config = {
       cache: true,
     },
 
+    container: {
+      dependsOn: ['build'],
+      cache: true,
+      options: {
+        load: true,
+        platforms: ['linux/amd64', 'linux/arm64'],
+      },
+      configurations: {
+        ci: {
+          load: false,
+          push: true,
+          metadata: {
+            tags: ['type=sha,prefix=sha-'],
+          },
+        },
+      },
+    },
+
     deploy: {
       dependsOn: ['build', 'test', 'lint'],
       cache: false,

@@ -9,8 +9,9 @@
       }
     ],
     "default": [
+      "sharedGlobals",
       "{projectRoot}/**/*",
-      "sharedGlobals"
+      "!{projectRoot}/**/?(*.)+spec.ts"
     ]
   },
   "targetDefaults": {
@@ -44,12 +45,36 @@
       "cache": false
     },
     "lint": {
-      "input": [],
+      "inputs": [],
       "cache": true
     },
     "lint:fix": {
-      "input": [],
+      "inputs": [],
       "cache": true
+    },
+    "container": {
+      "dependsOn": [
+        "build"
+      ],
+      "cache": false,
+      "options": {
+        "load": true,
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "load": false,
+          "push": true,
+          "metadata": {
+            "tags": [
+              "type=sha,prefix=sha-"
+            ]
+          }
+        }
+      }
     },
     "deploy": {
       "dependsOn": [
