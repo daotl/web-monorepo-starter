@@ -33,6 +33,8 @@
     "@daotl/biome-config": "0.0.4",
     "@daotl/tsconfig": "^0.1.2",
     "@manypkg/cli": "npm:@daotl/manypkg-cli@^0.21.1",
+    "@nx-tools/container-metadata": "^5.1.0",
+    "@nx-tools/nx-container": "^5.1.0",
     "@traf/nx": "^0.0.16",
     "commitiquette": "^1.2.1",
     "commitizen": "^4.3.0",

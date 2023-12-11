@@ -1,17 +1,42 @@
 {
   "name": "desktop",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/desktop/src",
   "targets": {
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "./apps/desktop",
-        "command": "mkdir dist && echo 'app' > dist/index.js"
+        "command": "mkdir -p dist && echo 'app' > dist/index.js"
       }
     },
     "lint": {
       "command": "echo lint",
       "options": {}
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "engine": "docker",
+        "context": "apps/desktop",
+        "file": "apps/desktop/docker/Dockerfile.ci"
+      },
+      "configurations": {
+        "dev": {
+          "tags": [
+            "daotl/web-monorepo-starter-desktop:dev"
+          ]
+        },
+        "ci": {
+          "metadata": {
+            "images": [
+              "daotl/web-monorepo-starter-desktop"
+            ]
+          }
+          // "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-${{ github.ref_name }}"],
+          // "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-${{ github.ref_name }},mode=max"]
+        }
+      }
     }
   }
 }
