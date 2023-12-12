@@ -37,9 +37,9 @@
               "type=edge,branch=main",
               "type=sha,enable={{is_default_branch}},prefix=sha-",
             ]
-          }
-          // "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-{{branch}}"],
-          // "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-{{branch}},mode=max"]
+          },
+          "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main"],
+          "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main,mode=max"]
         }
       }
     }
