@@ -45,11 +45,11 @@
       "cache": false
     },
     "lint": {
-      "input": [],
+      "inputs": [],
       "cache": true
     },
     "lint:fix": {
-      "input": [],
+      "inputs": [],
       "cache": true
     },
     "container": {
@@ -67,14 +67,7 @@
       "configurations": {
         "ci": {
           "load": false,
-          "push": true,
-          "metadata": {
-            "tags": [
-              "type=match,pattern=v(.*),group=1",
-              "type=edge,branch=main",
-              "type=sha,enable={{is_default_branch}},prefix=sha-"
-            ]
-          }
+          "push": true
         }
       }
     },

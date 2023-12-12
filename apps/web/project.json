@@ -31,10 +31,15 @@
           "metadata": {
             "images": [
               "daotl/web-monorepo-starter-web"
+            ],
+            "tags": [
+              "type=match,pattern=v(.*),group=1",
+              "type=edge,branch=main",
+              "type=sha,enable={{is_default_branch}},prefix=sha-"
             ]
           }
-          // "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-${{ github.ref_name }}"],
-          // "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-${{ github.ref_name }},mode=max"]
+          // "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-{{branch}}"],
+          // "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-{{branch}},mode=max"]
         }
       }
     }

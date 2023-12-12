@@ -50,11 +50,11 @@ const config = {
     },
 
     lint: {
-      input: [...inputsIgnore],
+      inputs: [...inputsIgnore],
       cache: true,
     },
     'lint:fix': {
-      input: [...inputsIgnore],
+      inputs: [...inputsIgnore],
       cache: true,
     },
 
@@ -69,13 +69,6 @@ const config = {
         ci: {
           load: false,
           push: true,
-          metadata: {
-            tags: [
-              'type=match,pattern=v(.*),group=1',
-              'type=edge,branch=main',
-              'type=sha,enable={{is_default_branch}},prefix=sha-',
-            ],
-          },
         },
       },
     },
