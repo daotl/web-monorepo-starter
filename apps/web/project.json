@@ -48,7 +48,7 @@
             ]
           },
           "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main"],
-          "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main,mode=max"]
+          "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main,oci-mediatypes=true,compression=zstd,mode=max,image-manifest=true"]
         }
       }
     }
