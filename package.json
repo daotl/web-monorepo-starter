@@ -11,10 +11,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "nx run-many -t build",
-    "test": "nx run-many -t test",
-    "lint": "biome format . && biome check . && nx run-many -t lint",
-    "lint:fix": "biome format --write . && biome check --apply . && nx run-many -t lint:fix",
     "gen-biome-json": "gen-biome-json",
     "dev": "nx run-many -t dev",
     "pulumi:init": "cd k8s && pnpm i --filter k8s",

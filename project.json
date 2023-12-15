@@ -1,0 +1,12 @@
+{
+  "name": "root",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": ".",
+  "targets": {
+    "lint": {
+      "options": {
+        "command": "[ {args.fix} = 'true' ] && biome check . || biome check --apply .",
+      }
+    }
+  }
+}
