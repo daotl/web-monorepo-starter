@@ -6,16 +6,12 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "./apps/desktop",
-        "command": "mkdir -p dist && echo 'app' > dist/index.js"
-      }
-    },
-    "eslint": {
-      "options": {
+        "command": "mkdir -p dist && echo 'app' > dist/index.js",
         "cwd": "./apps/desktop"
       }
     },
-    "eslint:fix": {
+    "lint": {},
+    "eslint": {
       "options": {
         "cwd": "./apps/desktop"
       }
@@ -24,17 +20,6 @@
       "options": {
         "cwd": "./apps/desktop"
       }
-    },
-    "stylelint:fix": {
-      "options": {
-        "cwd": "./apps/desktop"
-      }
-    },
-    "lint": {
-      "executor": "nx:noop"
-    },
-    "lint:fix": {
-      "executor": "nx:noop"
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",

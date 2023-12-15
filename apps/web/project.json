@@ -6,16 +6,13 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "./apps/web",
-        "command": "mkdir -p dist && echo 'app' > dist/index.js"
-      }
-    },
-    "eslint": {
-      "options": {
+        "command": "mkdir -p dist && echo 'app' > dist/index.js",
         "cwd": "./apps/web"
       }
     },
-    "eslint:fix": {
+
+    "lint": {},
+    "eslint": {
       "options": {
         "cwd": "./apps/web"
       }
@@ -25,17 +22,7 @@
         "cwd": "./apps/web"
       }
     },
-    "stylelint:fix": {
-      "options": {
-        "cwd": "./apps/web"
-      }
-    },
-    "lint": {
-      "executor": "nx:noop"
-    },
-    "lint:fix": {
-      "executor": "nx:noop"
-    },
+
     "container": {
       "executor": "@nx-tools/nx-container:build",
       "options": {

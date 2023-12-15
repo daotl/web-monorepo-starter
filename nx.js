@@ -24,13 +24,14 @@ const config = {
   targetDefaults: {
     build: {
       dependsOn: ['^build'],
+      cache: true,
       inputs: ['default'],
       // outputs,
-      cache: true,
     },
 
     test: {
       dependsOn: ['build'],
+      cache: true,
       inputs: [
         '{projectRoot}/src/**/*.js',
         '{projectRoot}/src/**/*.jsx',
@@ -42,51 +43,40 @@ const config = {
         '{projectRoot}/test/**/*.tsx',
         '{projectRoot}/src/**/*.vue',
       ],
-      cache: true,
     },
 
     dev: {
       cache: false,
     },
 
-    eslint: {
-      executor: 'nx:run-commands',
-      options: {
-        command: 'echo eslint ',
-      },
-    },
-
-    'eslint:fix': {
-      executor: 'nx:run-commands',
-      options: {
-        command: 'echo eslint:fix',
-      },
-    },
-
-    stylelint: {
-      executor: 'nx:run-commands',
-      options: {
-        command: 'echo stylelint',
-      },
-    },
-
-    'stylelint:fix': {
-      executor: 'nx:run-commands',
-      options: {
-        command: 'echo stylelint:fix',
-      },
-    },
-
     lint: {
-      dependsOn: ['eslint', 'stylelint'],
-      inputs: [...inputsIgnore],
+      dependsOn: [
+        // To pass "--fix"
+        { project: 'self', target: 'eslint', params: 'forward' },
+        { project: 'self', target: 'stylelint', params: 'forward' },
+      ],
       cache: true,
+      inputs: [...inputsIgnore],
+      // Can't use "nx:noop" for it doesn't allow passing args
+      // executor: 'nx:noop',
+      executor: 'nx:run-commands',
+      options: {
+        command: 'echo lint done, args:',
+      },
     },
-
-    'lint:fix': {
-      dependsOn: ['eslint:fix', 'stylelint:fix'],
-      inputs: [...inputsIgnore],
+    eslint: {
       cache: true,
+      executor: 'nx:run-commands',
+      options: {
+        command: 'FIX={args.fix}; echo eslint --fix=${FIX:-false}',
+      },
+    },
+    stylelint: {
+      cache: true,
+      executor: 'nx:run-commands',
+      options: {
+        command: 'FIX={args.fix}; echo stylelint --fix=${FIX:-false}',
+      },
     },
 
     container: {

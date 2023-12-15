@@ -1,0 +1,13 @@
+{
+  "name": "k8s",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "k8s/src",
+  "targets": {
+    "lint": {
+      "options": {
+        "command": "[ {args.fix} = 'true' ] && biome check . || biome check --apply .",
+        "cwd": "k8s"
+      }
+    }
+  }
+}

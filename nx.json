@@ -19,15 +19,16 @@
       "dependsOn": [
         "^build"
       ],
+      "cache": true,
       "inputs": [
         "default"
-      ],
-      "cache": true
+      ]
     },
     "test": {
       "dependsOn": [
         "build"
       ],
+      "cache": true,
       "inputs": [
         "{projectRoot}/src/**/*.js",
         "{projectRoot}/src/**/*.jsx",
@@ -38,51 +39,44 @@
         "{projectRoot}/test/**/*.ts",
         "{projectRoot}/test/**/*.tsx",
         "{projectRoot}/src/**/*.vue"
-      ],
-      "cache": true
+      ]
     },
     "dev": {
       "cache": false
     },
-    "eslint": {
+    "lint": {
+      "dependsOn": [
+        {
+          "project": "self",
+          "target": "eslint",
+          "params": "forward"
+        },
+        {
+          "project": "self",
+          "target": "stylelint",
+          "params": "forward"
+        }
+      ],
+      "cache": true,
+      "inputs": [],
       "executor": "nx:run-commands",
       "options": {
-        "command": "echo eslint "
+        "command": "echo lint done, args:"
       }
     },
-    "eslint:fix": {
+    "eslint": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
-        "command": "echo eslint:fix"
+        "command": "FIX={args.fix}; echo eslint --fix=${FIX:-false}"
       }
     },
     "stylelint": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
-        "command": "echo stylelint"
+        "command": "FIX={args.fix}; echo stylelint --fix=${FIX:-false}"
       }
-    },
-    "stylelint:fix": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "echo stylelint:fix"
-      }
-    },
-    "lint": {
-      "dependsOn": [
-        "eslint",
-        "stylelint"
-      ],
-      "inputs": [],
-      "cache": true
-    },
-    "lint:fix": {
-      "dependsOn": [
-        "eslint:fix",
-        "stylelint:fix"
-      ],
-      "inputs": [],
-      "cache": true
     },
     "container": {
       "dependsOn": [
