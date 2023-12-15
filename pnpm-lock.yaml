@@ -73,8 +73,8 @@ importers:
         version: link:../../lib/yourutil
     devDependencies:
       '@daotl/eslint-config':
-        specifier: ^2.0.0-beta.3
-        version: 2.0.0-beta.3(eslint@8.54.0)(typescript@5.3.2)
+        specifier: ^2.0.0
+        version: 2.0.0(eslint@8.54.0)(typescript@5.3.2)
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -86,8 +86,8 @@ importers:
         version: link:../../lib/myutil
     devDependencies:
       '@daotl/eslint-config':
-        specifier: ^2.0.0-beta.3
-        version: 2.0.0-beta.3(eslint@8.54.0)(typescript@5.3.2)
+        specifier: ^2.0.0
+        version: 2.0.0(eslint@8.54.0)(typescript@5.3.2)
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -107,18 +107,12 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
     devDependencies:
-      '@daotl/eslint-config':
-        specifier: ^2.0.0-beta.3
-        version: 2.0.0-beta.3(eslint@8.54.0)(typescript@5.3.2)
       '@daotl/tsconfig':
         specifier: ^0.1.2
         version: 0.1.2
       '@types/node':
         specifier: ^20.10.0
         version: 20.10.0
-      eslint:
-        specifier: ^8.54.0
-        version: 8.54.0
       type-fest:
         specifier: ^4.8.2
         version: 4.8.2
@@ -494,8 +488,8 @@ packages:
       json-stable-stringify: 1.1.0
     dev: false
 
-  /@daotl/eslint-config@2.0.0-beta.3(eslint@8.54.0)(typescript@5.3.2):
-    resolution: {integrity: sha512-zhFF8EbJMdhlPy3ei1GeEogHg+atYXof4wvXNPBM4nMPSMi0NS7tce+FCZnqvGEnaGThz4+1KyKITiHXVhvFzA==}
+  /@daotl/eslint-config@2.0.0(eslint@8.54.0)(typescript@5.3.2):
+    resolution: {integrity: sha512-I5NLnBldVcEZSXyOcyGHK+toisrJ5x6VCl6dDB2/x3i/XDJU+Bqc774m3FcWIu2cvH801Hx1e9HumAaOUUXpUA==}
     peerDependencies:
       eslint: '>=8.51.0'
     dependencies:
