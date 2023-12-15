@@ -92,4 +92,4 @@ jobs:
           if [ '${{ github.ref }}' = 'refs/heads/main' ] && [ '${{ github.event_name }}' = 'push' ] && [ '${{ matrix.node-version }}' = '20.x' ]; then
             targets="${targets} container"
           fi
-          pnpm nx affected -t ${targets} -c ci
+          pnpm nx affected -t ${targets} -c ci --parallel 20
