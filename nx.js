@@ -49,12 +49,43 @@ const config = {
       cache: false,
     },
 
+    eslint: {
+      executor: 'nx:run-commands',
+      options: {
+        command: 'echo eslint ',
+      },
+    },
+
+    'eslint:fix': {
+      executor: 'nx:run-commands',
+      options: {
+        command: 'echo eslint:fix',
+      },
+    },
+
+    stylelint: {
+      executor: 'nx:run-commands',
+      options: {
+        command: 'echo stylelint',
+      },
+    },
+
+    'stylelint:fix': {
+      executor: 'nx:run-commands',
+      options: {
+        command: 'echo stylelint:fix',
+      },
+    },
+
     lint: {
-      input: [...inputsIgnore],
+      inputs: [...inputsIgnore],
+      dependsOn: ['eslint', 'stylelint'],
       cache: true,
     },
+
     'lint:fix': {
-      input: [...inputsIgnore],
+      inputs: [...inputsIgnore],
+      dependsOn: ['eslint:fix', 'stylelint:fix'],
       cache: true,
     },
 

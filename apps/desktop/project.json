@@ -10,9 +10,31 @@
         "command": "mkdir -p dist && echo 'app' > dist/index.js"
       }
     },
+    "eslint": {
+      "options": {
+        "cwd": "./apps/desktop"
+      }
+    },
+    "eslint:fix": {
+      "options": {
+        "cwd": "./apps/desktop"
+      }
+    },
+    "stylelint": {
+      "options": {
+        "cwd": "./apps/desktop"
+      }
+    },
+    "stylelint:fix": {
+      "options": {
+        "cwd": "./apps/desktop"
+      }
+    },
     "lint": {
-      "command": "echo lint",
-      "options": {}
+      "executor": "nx:noop"
+    },
+    "lint:fix": {
+      "executor": "nx:noop"
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
