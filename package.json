@@ -1,5 +1,5 @@
 {
-  "name": "@fgweb/monorepo-starter",
+  "name": "@daotl/root",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -7,7 +7,7 @@
   "description": "Web monorepo starter template",
   "repository": {
     "type": "git",
-    "url": "git@gitea.internetapi.cn:fgweb/monorepo.git"
+    "url": "https://github.com/daotl/web-monorepo-starter.git"
   },
   "main": "index.js",
   "scripts": {
