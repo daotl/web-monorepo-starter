@@ -73,7 +73,7 @@ jobs:
         # https://github.com/pnpm/pnpm/issues/6300#issuecomment-1722120409
         run: CYPRESS_INSTALL_BINARY=0 ./scripts/pnpm-install-filtered.js --frozen-lockfile=true ${{ steps.affected.outputs.projs }}
 
-      - run: pnpm nx affected -t build lint
+      - run: pnpm nx affected --parallel 20 -t build lint
 
       # Build Docker images
 
