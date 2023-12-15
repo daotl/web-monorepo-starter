@@ -5,7 +5,7 @@
   "targets": {
     "lint": {
       "options": {
-        "command": "[ {args.fix} = 'true' ] && biome check . || biome check --apply .",
+        "command": "[ '{args.fix}' = 'true' ] && biome check . || biome check --apply .",
       }
     }
   }
