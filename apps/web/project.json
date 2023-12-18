@@ -2,13 +2,11 @@
   "name": "web",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web/src",
+  "projectType": "application",
   "targets": {
     "build": {
       "options": {
-        "outputPath": "dist/apps/web",
-        "main": "apps/web/src/index.ts",
-        "tsConfig": "apps/web/tsconfig.build.json",
-        "assets": []
+        "outputPath": "dist/apps/web"
       }
     },
     "test": {
@@ -17,16 +15,8 @@
       }
     },
     "lint": {},
-    "eslint": {
-      "options": {
-        "cwd": "./apps/web"
-      }
-    },
-    "stylelint": {
-      "options": {
-        "cwd": "./apps/web"
-      }
-    },
+    "eslint": {},
+    "stylelint": {},
     "container": {
       "executor": "@nx-tools/nx-container:build",
       "options": {

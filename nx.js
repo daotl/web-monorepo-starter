@@ -30,6 +30,8 @@ const config = {
       outputs: ['{options.outputPath}'],
       options: {
         clean: false,
+        main: '{projectRoot}/src/index.ts',
+        tsConfig: '{projectRoot}/tsconfig.build.json',
       },
       configurations: {
         ci: {
@@ -75,6 +77,7 @@ const config = {
       // executor: 'nx:noop',
       executor: 'nx:run-commands',
       options: {
+        cwd: '{projectRoot}',
         command: 'echo lint done, args:',
       },
     },
@@ -82,6 +85,7 @@ const config = {
       cache: true,
       executor: 'nx:run-commands',
       options: {
+        cwd: '{projectRoot}',
         command: 'FIX={args.fix}; eslint src --fix=${FIX:-false}',
       },
     },
@@ -89,6 +93,7 @@ const config = {
       cache: true,
       executor: 'nx:run-commands',
       options: {
+        cwd: '{projectRoot}',
         command:
           'FIX={args.fix}; echo stylelint "src/**/*.{css,scss,vue,tsx}" --fix=${FIX:-false}',
       },

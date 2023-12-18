@@ -7,8 +7,6 @@
     "build": {
       "options": {
         "outputPath": "dist/libs/myutil",
-        "main": "libs/myutil/src/index.ts",
-        "tsConfig": "libs/myutil/tsconfig.build.json",
         "assets": ["libs/myutil/*.md"]
       }
     },
@@ -19,7 +17,6 @@
     },
     "lint": {
       "options": {
-        "cwd": "libs/myutil",
         "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
       }
     }
