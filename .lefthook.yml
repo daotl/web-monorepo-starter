@@ -1,7 +1,7 @@
 extends:
   - k8s/.lefthook.yml
   # FIXME: Biome "extends" overriding and "overrides" not working for now
-  # - apps/lib/.lefthook.yml
+  # - apps/libs/.lefthook.yml
   - apps/web/.lefthook.yml
   - apps/desktop/.lefthook.yml
 

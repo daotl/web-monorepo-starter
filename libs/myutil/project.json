@@ -1,25 +1,25 @@
 {
   "name": "myutil",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "lib/myutil/src",
+  "sourceRoot": "libs/myutil/src",
   "projectType": "library",
   "targets": {
     "build": {
       "options": {
-        "outputPath": "dist/lib/myutil",
-        "main": "lib/myutil/src/index.ts",
-        "tsConfig": "lib/myutil/tsconfig.build.json",
-        "assets": ["lib/myutil/*.md"]
+        "outputPath": "dist/libs/myutil",
+        "main": "libs/myutil/src/index.ts",
+        "tsConfig": "libs/myutil/tsconfig.build.json",
+        "assets": ["libs/myutil/*.md"]
       }
     },
     "test": {
       "options": {
-        "reportsDirectory": "../coverage/lib/myutil"
+        "reportsDirectory": "../coverage/libs/myutil"
       }
     },
     "lint": {
       "options": {
-        "cwd": "lib/myutil",
+        "cwd": "libs/myutil",
         "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
       }
     }

@@ -118,7 +118,7 @@ importers:
     dependencies:
       '@daotl/myutil':
         specifier: workspace:*
-        version: link:../../lib/myutil
+        version: link:../../libs/myutil
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -151,7 +151,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  lib/myutil:
+  libs/myutil:
     dependencies:
       tslib:
         specifier: ^2.3.0

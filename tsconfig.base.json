@@ -8,7 +8,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@daotl/desktop": ["apps/desktop/src/index.ts"],
-      "@daotl/myutil": ["lib/myutil/src/index.ts"],
+      "@daotl/myutil": ["libs/myutil/src/index.ts"],
       "@daotl/web": ["apps/web/src/index.ts"]
     }
   }

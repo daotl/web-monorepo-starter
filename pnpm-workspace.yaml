@@ -2,7 +2,7 @@ packages:
   - '.'
   - 'packages/*'
   - 'apps/*'
-  - 'lib/*'
+  - 'libs/*'
   - k8s
   # exclude
   - '!**/test/**'
