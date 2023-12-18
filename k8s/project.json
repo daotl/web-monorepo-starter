@@ -6,7 +6,7 @@
     "lint": {
       "options": {
         "cwd": "k8s",
-        "command": "[ '{args.fix}' = 'true' ] && biome check . || biome check --apply ."
+        "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
       }
     }
   }

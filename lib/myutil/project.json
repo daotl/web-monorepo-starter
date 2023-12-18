@@ -15,7 +15,7 @@
     "lint": {
       "options": {
         "cwd": "lib/myutil",
-        "command": "[ '{args.fix}' = 'true' ] && biome check . || biome check --apply ."
+        "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
       }
     },
     "test": {
