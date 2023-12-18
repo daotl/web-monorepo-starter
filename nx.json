@@ -20,8 +20,12 @@
         "^build"
       ],
       "cache": true,
+      "executor": "@nx/js:tsc",
       "inputs": [
         "default"
+      ],
+      "outputs": [
+        "{options.outputPath}"
       ]
     },
     "test": {

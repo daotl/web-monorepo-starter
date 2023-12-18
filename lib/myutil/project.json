@@ -5,8 +5,6 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "lib/myutil/dist",
         "main": "lib/myutil/src/index.ts",

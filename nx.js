@@ -25,8 +25,9 @@ const config = {
     build: {
       dependsOn: ['^build'],
       cache: true,
+      executor: '@nx/js:tsc',
       inputs: ['default'],
-      // outputs,
+      outputs: ['{options.outputPath}'],
     },
 
     test: {
