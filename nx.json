@@ -27,8 +27,12 @@
       "outputs": [
         "{options.outputPath}"
       ],
-      "options": {
-        "generateLockfile": true
+      "configurations": {
+        "ci": {
+          "options": {
+            "generateLockfile": true
+          }
+        }
       }
     },
     "test": {

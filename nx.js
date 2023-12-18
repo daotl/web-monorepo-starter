@@ -28,9 +28,13 @@ const config = {
       executor: '@nx/js:tsc',
       inputs: ['default'],
       outputs: ['{options.outputPath}'],
-      options: {
-        // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
-        generateLockfile: true,
+      configurations: {
+        ci: {
+          options: {
+            // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
+            generateLockfile: true,
+          },
+        },
       },
     },
 
