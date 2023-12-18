@@ -4,13 +4,18 @@
   "sourceRoot": "apps/web/src",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
       "options": {
-        "cwd": "./apps/web",
-        "command": "mkdir -p dist && echo 'app' > dist/index.js"
+        "outputPath": "dist/apps/web",
+        "main": "apps/web/src/index.ts",
+        "tsConfig": "apps/web/tsconfig.build.json",
+        "assets": []
       }
     },
-
+    "test": {
+      "options": {
+        "reportsDirectory": "../coverage/apps/web"
+      }
+    },
     "lint": {},
     "eslint": {
       "options": {
@@ -22,7 +27,6 @@
         "cwd": "./apps/web"
       }
     },
-
     "container": {
       "executor": "@nx-tools/nx-container:build",
       "options": {
@@ -47,10 +51,15 @@
               "type=sha,enable={{is_default_branch}},prefix=sha-"
             ]
           },
-          "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main"],
-          "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main,oci-mediatypes=true,compression=zstd,mode=max,image-manifest=true"]
+          "cache-from": [
+            "type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main"
+          ],
+          "cache-to": [
+            "type=registry,ref=daotl/web-monorepo-starter-web:buildcache-main,oci-mediatypes=true,compression=zstd,mode=max,image-manifest=true"
+          ]
         }
       }
     }
-  }
+  },
+  "tags": []
 }

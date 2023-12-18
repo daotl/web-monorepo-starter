@@ -4,10 +4,16 @@
   "sourceRoot": "apps/desktop/src",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
       "options": {
-        "cwd": "./apps/desktop",
-        "command": "mkdir -p dist && echo 'app' > dist/index.js"
+        "outputPath": "dist/apps/desktop",
+        "main": "apps/desktop/src/index.ts",
+        "tsConfig": "apps/desktop/tsconfig.build.json",
+        "assets": []
+      }
+    },
+    "test": {
+      "options": {
+        "reportsDirectory": "../coverage/apps/desktop"
       }
     },
     "lint": {},
@@ -42,13 +48,18 @@
             "tags": [
               "type=match,pattern=v(.*),group=1",
               "type=edge,branch=main",
-              "type=sha,enable={{is_default_branch}},prefix=sha-",
+              "type=sha,enable={{is_default_branch}},prefix=sha-"
             ]
           },
-          "cache-from": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main"],
-          "cache-to": ["type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main,oci-mediatypes=true,compression=zstd,mode=max,image-manifest=true"]
+          "cache-from": [
+            "type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main"
+          ],
+          "cache-to": [
+            "type=registry,ref=daotl/web-monorepo-starter-desktop:buildcache-main,oci-mediatypes=true,compression=zstd,mode=max,image-manifest=true"
+          ]
         }
       }
     }
-  }
+  },
+  "tags": []
 }

@@ -1,10 +1,13 @@
 {
   "name": "@daotl/web",
-  "type": "module",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
   "dependencies": {
-    "@daotl/myutil": "workspace:*"
+    "@daotl/myutil": "workspace:*",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@daotl/eslint-config": "^2.0.0",
