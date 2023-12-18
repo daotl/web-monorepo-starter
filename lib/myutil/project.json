@@ -12,17 +12,15 @@
         "assets": ["lib/myutil/*.md"]
       }
     },
+    "test": {
+      "options": {
+        "reportsDirectory": "../coverage/lib/myutil"
+      }
+    },
     "lint": {
       "options": {
         "cwd": "lib/myutil",
         "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
-      }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "reportsDirectory": "../coverage/lib/myutil"
       }
     }
   },

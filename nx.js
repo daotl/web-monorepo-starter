@@ -37,6 +37,8 @@ const config = {
     test: {
       dependsOn: ['build'],
       cache: true,
+      executor: '@nx/vite:test',
+      outputs: ['{options.reportsDirectory}'],
       inputs: [
         '{projectRoot}/src/**/*.js',
         '{projectRoot}/src/**/*.jsx',
