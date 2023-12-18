@@ -6,8 +6,8 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "mkdir -p dist && echo 'app' > dist/index.js",
-        "cwd": "./apps/desktop"
+        "cwd": "./apps/desktop",
+        "command": "mkdir -p dist && echo 'app' > dist/index.js"
       }
     },
     "lint": {},

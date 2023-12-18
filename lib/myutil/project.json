@@ -1,14 +1,32 @@
 {
   "name": "myutil",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "lib/myutil/src",
+  "projectType": "library",
   "targets": {
     "build": {
-      "command": "echo build",
-      "options": {}
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "lib/myutil/dist",
+        "main": "lib/myutil/src/index.ts",
+        "tsConfig": "lib/myutil/tsconfig.lib.json",
+        "assets": ["lib/myutil/*.md"]
+      }
     },
     "lint": {
-      "command": "echo lint",
-      "options": {}
+      "options": {
+        "cwd": "lib/myutil",
+        "command": "[ '{args.fix}' = 'true' ] && biome check . || biome check --apply ."
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "./coverage"
+      }
     }
-  }
+  },
+  "tags": []
 }

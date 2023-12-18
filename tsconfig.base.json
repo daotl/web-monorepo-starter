@@ -1,12 +1,15 @@
 {
-  "extends": "@daotl/tsconfig/node.json",
-  "compileOnSave": false,
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node20/tsconfig.json",
+  ],
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "paths": {
       "@daotl/desktop": ["apps/desktop/src/index.ts"],
       "@daotl/myutil": ["lib/myutil/src/index.ts"],
       "@daotl/web": ["apps/web/src/index.ts"],
-      "@daotl/yourutil": ["lib/yourutil/src/index.ts"]
     }
   }
 }
