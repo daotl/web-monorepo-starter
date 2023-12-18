@@ -4,6 +4,9 @@
   "vcs": {
     "root": "../.."
   },
+  "files": {
+    "ignore": ["**/*.spec.ts"]
+  },
   "overrides": [
     {
       "include": ["**/*.spec.ts"],
