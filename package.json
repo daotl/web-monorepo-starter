@@ -29,7 +29,6 @@
     "@daotl/biome-config": "0.0.4",
     "@daotl/eslint-config": "^2.1.0",
     "@manypkg/cli": "npm:@daotl/manypkg-cli@^0.21.1",
-    "@daotl/tsconfig": "^0.1.2",
     "@nx-tools/container-metadata": "^5.1.0",
     "@nx-tools/nx-container": "^5.1.0",
     "@nx/js": "^17.2.5",
