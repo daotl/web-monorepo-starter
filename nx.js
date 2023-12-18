@@ -82,14 +82,15 @@ const config = {
       cache: true,
       executor: 'nx:run-commands',
       options: {
-        command: 'FIX={args.fix}; echo eslint --fix=${FIX:-false}',
+        command: 'FIX={args.fix}; eslint src --fix=${FIX:-false}',
       },
     },
     stylelint: {
       cache: true,
       executor: 'nx:run-commands',
       options: {
-        command: 'FIX={args.fix}; echo stylelint --fix=${FIX:-false}',
+        command:
+          'FIX={args.fix}; echo stylelint "src/**/*.{css,scss,vue,tsx}" --fix=${FIX:-false}',
       },
     },
 
