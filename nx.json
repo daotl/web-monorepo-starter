@@ -84,9 +84,15 @@
     },
     "eslint": {
       "cache": true,
-      "executor": "nx:run-commands",
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "command": "FIX={args.fix}; echo eslint --fix=${FIX:-false}"
+        "lintFilePatterns": [
+          "{projectRoot}/src/**/*.{js,jsx,ts,tsx,vue}"
+        ],
+        "eslintConfig": "{projectRoot}/eslint.config.js"
       }
     },
     "stylelint": {

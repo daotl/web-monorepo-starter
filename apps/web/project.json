@@ -17,11 +17,7 @@
       }
     },
     "lint": {},
-    "eslint": {
-      "options": {
-        "cwd": "./apps/web"
-      }
-    },
+    "eslint": {},
     "stylelint": {
       "options": {
         "cwd": "./apps/web"
