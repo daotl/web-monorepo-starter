@@ -27,6 +27,9 @@
       "outputs": [
         "{options.outputPath}"
       ],
+      "options": {
+        "clean": false
+      },
       "configurations": {
         "ci": {
           "options": {

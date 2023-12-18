@@ -28,6 +28,9 @@ const config = {
       executor: '@nx/js:tsc',
       inputs: ['default'],
       outputs: ['{options.outputPath}'],
+      options: {
+        clean: false,
+      },
       configurations: {
         ci: {
           options: {
