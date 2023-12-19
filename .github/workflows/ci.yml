@@ -65,6 +65,9 @@ jobs:
           projs=${projs#[}
           projs=${projs%]}
           projs=$(echo ${projs} | sed -e 's/\"//g')
+          if ! grep -qE '(^|,)root($|,)' <<< '${projs}'; then
+            projs="root,${projs}"
+          fi
           echo Affected projects: ${projs}
           echo projs=${projs} >> $GITHUB_OUTPUT
 
