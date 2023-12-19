@@ -4,9 +4,7 @@
   "sourceRoot": "apps/desktop/src",
   "projectType": "application",
   "targets": {
-    "build": {
-      "dependsOn": ["build-fe"]
-    },
+    "build": {},
     "build-fe": {},
     "test": {
       "options": {

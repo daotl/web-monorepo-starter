@@ -24,7 +24,7 @@ const config = {
 
   targetDefaults: {
     build: {
-      dependsOn: ['build-node'],
+      dependsOn: ['build-node', 'build-fe'],
       executor: 'nx:noop',
     },
     'build-node': {
@@ -55,7 +55,6 @@ const config = {
       outputs: ['{options.outputPath}'],
       options: {
         outputPath: '{projectRoot}/dist',
-        // tsConfig: '{projectRoot}/tsconfig.build.json',
       },
       configurations: {
         ci: {

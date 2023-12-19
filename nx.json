@@ -17,7 +17,8 @@
   "targetDefaults": {
     "build": {
       "dependsOn": [
-        "build-node"
+        "build-node",
+        "build-fe"
       ],
       "executor": "nx:noop"
     },
