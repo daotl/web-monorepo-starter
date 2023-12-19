@@ -17,6 +17,12 @@
   "targetDefaults": {
     "build": {
       "dependsOn": [
+        "build-node"
+      ],
+      "executor": "nx:noop"
+    },
+    "build-node": {
+      "dependsOn": [
         "^build"
       ],
       "cache": true,
@@ -31,6 +37,29 @@
         "clean": false,
         "main": "{projectRoot}/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.build.json"
+      },
+      "configurations": {
+        "ci": {
+          "options": {
+            "generateLockfile": true
+          }
+        }
+      }
+    },
+    "build-fe": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": true,
+      "executor": "@nx/vite:build",
+      "inputs": [
+        "default"
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "{projectRoot}/dist"
       },
       "configurations": {
         "ci": {

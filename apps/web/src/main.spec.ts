@@ -1,4 +1,4 @@
-import { web } from '.'
+import { web } from './main'
 
 describe('web', () => {
   it('should work', () => {

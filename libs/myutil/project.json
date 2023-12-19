@@ -4,7 +4,8 @@
   "sourceRoot": "libs/myutil/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "build": {},
+    "build-node": {
       "options": {
         "outputPath": "dist/libs/myutil",
         "assets": ["libs/myutil/*.md"]

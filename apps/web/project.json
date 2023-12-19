@@ -5,10 +5,9 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "options": {
-        "outputPath": "dist/apps/web"
-      }
+      "dependsOn": ["build-fe"]
     },
+    "build-fe": {},
     "test": {
       "options": {
         "reportsDirectory": "../coverage/apps/web"

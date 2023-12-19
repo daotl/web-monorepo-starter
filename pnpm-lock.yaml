@@ -107,21 +107,15 @@ importers:
 
   apps/desktop:
     dependencies:
-      '@daotl/web':
+      '@daotl/myutil':
         specifier: workspace:*
-        version: link:../web
-      tslib:
-        specifier: ^2.3.0
-        version: 2.6.2
+        version: link:../../libs/myutil
 
   apps/web:
     dependencies:
       '@daotl/myutil':
         specifier: workspace:*
         version: link:../../libs/myutil
-      tslib:
-        specifier: ^2.3.0
-        version: 2.6.2
 
   k8s:
     dependencies:

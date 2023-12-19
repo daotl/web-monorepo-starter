@@ -21,8 +21,13 @@ const config = {
       '!{projectRoot}/**/?(*.)+spec.ts',
     ],
   },
+
   targetDefaults: {
     build: {
+      dependsOn: ['build-node'],
+      executor: 'nx:noop',
+    },
+    'build-node': {
       dependsOn: ['^build'],
       cache: true,
       executor: '@nx/js:tsc',
@@ -32,6 +37,25 @@ const config = {
         clean: false,
         main: '{projectRoot}/src/index.ts',
         tsConfig: '{projectRoot}/tsconfig.build.json',
+      },
+      configurations: {
+        ci: {
+          options: {
+            // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
+            generateLockfile: true,
+          },
+        },
+      },
+    },
+    'build-fe': {
+      dependsOn: ['^build'],
+      cache: true,
+      executor: '@nx/vite:build',
+      inputs: ['default'],
+      outputs: ['{options.outputPath}'],
+      options: {
+        outputPath: '{projectRoot}/dist',
+        // tsConfig: '{projectRoot}/tsconfig.build.json',
       },
       configurations: {
         ci: {

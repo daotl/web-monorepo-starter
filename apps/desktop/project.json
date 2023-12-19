@@ -5,9 +5,7 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "options": {
-        "outputPath": "dist/apps/desktop"
-      }
+      "dependsOn": ["build-fe"]
     },
     "test": {
       "options": {
