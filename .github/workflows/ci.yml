@@ -50,7 +50,7 @@ jobs:
         with:
           version: 8
           run_install: |
-            - args: [--global, zx, '@traf/nx']
+            - args: [--global, zx, '@daotl/traf-nx']
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
