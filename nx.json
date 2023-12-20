@@ -41,9 +41,7 @@
       },
       "configurations": {
         "ci": {
-          "options": {
-            "generateLockfile": true
-          }
+          "generateLockfile": true
         }
       }
     },
@@ -64,9 +62,7 @@
       },
       "configurations": {
         "ci": {
-          "options": {
-            "generateLockfile": true
-          }
+          "generateLockfile": true
         }
       }
     },

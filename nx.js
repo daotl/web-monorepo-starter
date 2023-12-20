@@ -40,10 +40,8 @@ const config = {
       },
       configurations: {
         ci: {
-          options: {
-            // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
-            generateLockfile: true,
-          },
+          // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
+          generateLockfile: true,
         },
       },
     },
@@ -58,10 +56,8 @@ const config = {
       },
       configurations: {
         ci: {
-          options: {
-            // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
-            generateLockfile: true,
-          },
+          // Generate a lockfile (e.g. package-lock.json) that matches the workspace lockfile to ensure package versions match.
+          generateLockfile: true,
         },
       },
     },
