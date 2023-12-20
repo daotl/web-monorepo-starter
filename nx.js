@@ -36,7 +36,7 @@ const config = {
       options: {
         clean: false,
         main: '{projectRoot}/src/index.ts',
-        tsConfig: '{projectRoot}/tsconfig.build.json',
+        tsConfig: '{projectRoot}/tsconfig.src.json',
       },
       configurations: {
         ci: {
@@ -111,7 +111,7 @@ const config = {
       executor: 'nx:run-commands',
       options: {
         cwd: '{projectRoot}',
-        command: 'FIX={args.fix}; eslint src --fix=${FIX:-false}',
+        command: 'FIX={args.fix}; eslint . --fix=${FIX:-false}',
       },
     },
     stylelint: {

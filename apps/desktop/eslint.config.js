@@ -5,16 +5,8 @@ export default config(
   {
     languageOptions: {
       parserOptions: {
-        project: ['tsconfig.build.json'],
-      }
-    }
-  },
-  {
-    files: ["**/*.spec.ts"],
-    languageOptions: {
-      parserOptions: {
-        project: ['tsconfig.spec.json'],
-      }
-    }
+        project: ['tsconfig.root.json', 'tsconfig.src.json', 'tsconfig.spec.json'],
+      },
+    },
   },
 )
