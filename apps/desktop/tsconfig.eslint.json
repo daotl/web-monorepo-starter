@@ -1,13 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "types": [
-      "vitest/globals",
-      "vitest/importMeta",
-      "vite/client",
-      "node",
-      "vitest"
-    ]
-  },
-  "include": [".*.cjs", "**/*.ts", "**/*.cts", "**/*.tsx", "**/*.js", "**/*.cjs", "**/*.jsx","**/*.vue"],
+  "include": [".*.cjs", "**/*.ts", "**/*.cts", "**/*.tsx", "**/*.js", "**/*.cjs", "**/*.jsx", "**/*.vue"]
 }
