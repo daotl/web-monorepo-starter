@@ -80,10 +80,6 @@ const config = {
       ],
     },
 
-    dev: {
-      cache: false,
-    },
-
     lint: {
       dependsOn: [
         // To pass "--fix"
@@ -135,7 +131,6 @@ const config = {
 
     deploy: {
       dependsOn: ['build', 'test', 'lint'],
-      cache: false,
     },
   },
 }

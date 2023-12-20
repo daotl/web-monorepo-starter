@@ -87,9 +87,6 @@
         "{projectRoot}/src/**/*.vue"
       ]
     },
-    "dev": {
-      "cache": false
-    },
     "lint": {
       "dependsOn": [
         {
@@ -151,8 +148,7 @@
         "build",
         "test",
         "lint"
-      ],
-      "cache": false
+      ]
     }
   }
 }
