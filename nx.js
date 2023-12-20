@@ -83,6 +83,7 @@ const config = {
     lint: {
       dependsOn: [
         // To pass "--fix"
+        { project: 'self', target: 'biome', params: 'forward' },
         { project: 'self', target: 'eslint', params: 'forward' },
         { project: 'self', target: 'stylelint', params: 'forward' },
       ],
@@ -94,6 +95,15 @@ const config = {
       options: {
         cwd: '{projectRoot}',
         command: 'echo lint done, args:',
+      },
+    },
+    biome: {
+      cache: true,
+      executor: 'nx:run-commands',
+      options: {
+        cwd: '{projectRoot}',
+        command:
+          "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check .",
       },
     },
     eslint: {

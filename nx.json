@@ -91,6 +91,11 @@
       "dependsOn": [
         {
           "project": "self",
+          "target": "biome",
+          "params": "forward"
+        },
+        {
+          "project": "self",
           "target": "eslint",
           "params": "forward"
         },
@@ -106,6 +111,14 @@
       "options": {
         "cwd": "{projectRoot}",
         "command": "echo lint done, args:"
+      }
+    },
+    "biome": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
       }
     },
     "eslint": {

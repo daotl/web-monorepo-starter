@@ -16,11 +16,8 @@
         "reportsDirectory": "../coverage/libs/myutil"
       }
     },
-    "lint": {
-      "options": {
-        "command": "[ '{args.fix}' = 'true' ] && biome check --apply . || biome check ."
-      }
-    }
+    "lint": {},
+    "biome": {}
   },
   "tags": []
 }
