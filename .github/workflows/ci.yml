@@ -50,7 +50,7 @@ jobs:
         with:
           version: 8
           run_install: |
-            - args: [--global, zx, '@daotl/traf-nx']
+            - args: [--global, zx, '@daotl/traf-nx@0.0.17-1']
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -86,7 +86,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN  }}
 
-      - name: nx affected
+      - name: Nx
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INPUT_BUILDER: ${{ steps.docker-setup-buildx.outputs.name }}
@@ -96,4 +96,4 @@ jobs:
           if [ '${{ github.ref }}' = 'refs/heads/main' ] && [ '${{ github.event_name }}' = 'push' ] && [ '${{ matrix.node-version }}' = '20.x' ]; then
             targets="${targets} container"
           fi
-          pnpm nx affected -t ${targets} -c ci --parallel 20 --batch
+          pnpm nx run-many -p ${{ steps.affected.outputs.projs }} -t ${targets} -c ci --parallel 20 --batch
