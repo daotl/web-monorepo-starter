@@ -45,8 +45,8 @@ importers:
         specifier: ~1.3.101
         version: 1.3.101
       '@traf/nx':
-        specifier: npm:@daotl/traf-nx@0.0.17-1
-        version: /@daotl/traf-nx@0.0.17-1
+        specifier: npm:@daotl/traf-nx@0.0.17-2
+        version: /@daotl/traf-nx@0.0.17-2
       '@tsconfig/esm':
         specifier: ^1.0.5
         version: 1.0.5
@@ -1877,8 +1877,8 @@ packages:
       validate-npm-package-name: 3.0.0
     dev: false
 
-  /@daotl/traf-nx@0.0.17-1:
-    resolution: {integrity: sha512-0Cd8xZ7FXIG2QQk/f4qNAYqiG7Ct6oAKhWPISNVdz9deQdGfJqeQUkmYn/qFsjGHHt8hGZLr4TF6QVj4mMskqQ==}
+  /@daotl/traf-nx@0.0.17-2:
+    resolution: {integrity: sha512-uLWvPm8LN8VQGpBCJzgcP94e7wXOw9tzAAwUBjhePqcbv34qVGDyOm0OZCt7d5L27sATVg6tg6sE1rRoB8AiCg==}
     hasBin: true
     dependencies:
       chalk: 5.3.0
