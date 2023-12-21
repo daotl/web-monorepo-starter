@@ -28,7 +28,8 @@
       "options": {
         "clean": false,
         "main": "{projectRoot}/src/index.ts",
-        "tsConfig": "{projectRoot}/tsconfig.src.json"
+        "tsConfig": "{projectRoot}/tsconfig.src.json",
+        "outputPath": "{projectRoot}/root"
       },
       "configurations": {
         "ci": {
