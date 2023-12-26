@@ -50,7 +50,7 @@ jobs:
         with:
           version: 8
           run_install: |
-            - args: [--global, zx, '@daotl/traf-nx@0.0.17-2']
+            - args: [--global, zx, '@traf/nx@^0.0.21']
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -61,7 +61,15 @@ jobs:
       - name: Calculate affected projects
         id: affected
         run: |
-          projs=$(traf-nx affected --base=${NX_BASE} --json=true)
+          # "traf-nx" needs "@daotl/tsconfig" to be present, workaround for "npm install --no-save” error when "package.json"s exist
+          mv package.json package.json.bk
+          npm install --no-save @daotl/tsconfig
+          mv package.json.bk package.json
+
+          # Workaround: Error: Could not find ".modules.yaml" at
+          touch node_modules/.modules.yaml
+          projs=$(traf-nx affected --base=${NX_BASE} --includeFiles=../package.json,../nx.json,../project.json --json=true)
+          rm -f node_modules/.modules.yaml
           projs=${projs#[}
           projs=${projs%]}
           projs=$(echo ${projs} | sed -e 's/\"//g')
