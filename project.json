@@ -4,6 +4,7 @@
   "sourceRoot": "scripts",
   "targets": {
     "lint": {},
-    "biome": {}
+    "biome": {},
+    "build": {}
   }
 }
