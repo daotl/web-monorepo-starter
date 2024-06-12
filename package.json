@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.1.4",
+  "packageManager": "pnpm@8.11.0",
   "description": "Web monorepo starter template",
   "repository": {
     "type": "git",
